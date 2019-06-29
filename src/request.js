@@ -1,26 +1,22 @@
-import axios from 'axios'
-import index from './requests/index'
+const requestFiles = require.context('./requests', true, /.js$/).keys();
+let requests = {};
+requestFiles.forEach(function (n) {
+  const path = n.replace(/\.\/|\.js/g,'');
+  const _requests = require(`./requests/`+path);
 
-// axios 插件拦截
-axios.defaults.withCredentials = true;
-axios.interceptors.request.use(config=>{
-  /*const token = localStorage.getItem('ACCESS_TOKEN');
-  if(token){
-    config.headers.Authorization = `Bearer ${token}`;
-  }*/
-  return config;
-});
-axios.interceptors.response.use(function (response) {
-  return response.data;
-}, function (error) {
-  return Promise.reject(error);
+  for (let o in _requests){
+    if(o === 'default'){
+      for (let i in _requests[o]){
+        requests[i] = _requests[o][i]
+      }
+    }else{
+      requests[o] = _requests[o]
+    }
+  }
 });
 
-// 请求接口请按模块划分
 export default{
   install(Vue){
-    Vue.prototype.$request = {
-      ...index,
-    }
+    Vue.prototype.$request = requests
   }
 }
