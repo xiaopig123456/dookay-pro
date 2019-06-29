@@ -9,6 +9,9 @@ import './plugins/index'
 import './plugins/element'
 import './permission'
 
+import './styles/element.scss'
+import './styles/main.scss'
+
 Vue.use(request)
 Vue.use(util)
 
