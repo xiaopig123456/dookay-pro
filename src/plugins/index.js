@@ -1,9 +1,13 @@
 import Vue from 'vue'
+
 import VueAxios from "vue-axios"
 import axios from "axios"
-import VueMoment from "vue-moment";
 
-// axios 插件拦截
+import VueMoment from "vue-moment";
+Vue.use(VueMoment)
+
+
+// axios 请求拦截
 axios.defaults.withCredentials = true;
 axios.interceptors.request.use(config=>{
   /*const token = localStorage.getItem('ACCESS_TOKEN');
@@ -19,4 +23,3 @@ axios.interceptors.response.use(function (response) {
 });
 
 Vue.use(VueAxios, axios)
-Vue.use(VueMoment)
