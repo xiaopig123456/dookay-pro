@@ -1,13 +1,13 @@
 <template>
     <div>
-        <h1>我是Base布局</h1>
-        <slot></slot>
+        <div><img src="../assets/logo.png" width="100"></div>
+        <router-view />
     </div>
 </template>
 
 <script>
   export default {
-    name: "BaseLayout"
+    name: "Default"
   }
 </script>
 
