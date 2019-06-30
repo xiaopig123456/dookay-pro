@@ -1,19 +1,14 @@
 <template>
-    <div>
+    <main-layout>
         <h1>Index</h1>
         <hello-world msg="Hello World !" />
         <el-button type="primary">Start</el-button>
-    </div>
+    </main-layout>
 </template>
 
 <script>
-  import HelloWorld from '../components/HelloWorld';
-
   export default {
     name: "Index",
-    components: {
-      HelloWorld
-    }
   }
 </script>
 
