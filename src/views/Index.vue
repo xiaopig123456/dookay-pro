@@ -9,11 +9,6 @@
 <script>
   export default {
     name: "Index",
-    mounted() {
-        this.$request.demo().then(res=>{
-          // doing something
-        })
-    }
   }
 </script>
 
