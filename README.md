@@ -54,7 +54,7 @@ dookay-pro
 - 创建以`_`下划线开头的文件夹下的组件，不会被注册为全局组件。
 
 ### 布局
-`src/layouts/Default.vue` 为系统默认布局*不可删除*。布局的使用请看“[路由](#router "路由")”部分介绍。
+`src/layouts/Default.vue` 为系统默认布局**不可删除**。布局的使用请看“[路由](#router "路由")”部分介绍。
 
 ### 请求api
 `src/requests`目录用于存放api接口，其挂载为vue的一个属性，使用`this.$request`来访问。 例如：
@@ -99,7 +99,7 @@ export default [
 
 ### 样式
 - `src/styles`样式目录，scss作为主预编译语言，
-- 其中`variables.scss`为全局变量，将会被注册到全局任意地方的scss中，*不可删除*
+- 其中`variables.scss`为全局变量，将会被注册到全局任意地方的scss中，**不可删除**
 - 创建以`_`下划线开头的样式文件，将不会被引入。
 
 ### 工具
