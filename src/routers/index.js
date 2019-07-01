@@ -1,14 +1,14 @@
 export default [
   {
-    path: '/',
+    path: '/index',
     name:'index',
-    meta: { title: 'Index'},
+    meta: {default:true,title: 'Index'},
     component:()=> import('../views/Index')
   },
   {
     path: "*",
     name:'error',
-    meta: { title: 'Error' },
+    meta: {layout:false, title: 'Error' },
     component: () => import("../views/Error"),
     hidden: true
   }

@@ -3,51 +3,51 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-import './plugins/index'
-import './plugins/element'
-
+// 权限过滤
 import './permission'
 
+// 载入插件
+require.context('./plugins', true, /.js$/).keys().forEach(function (n) {
+  require(`./plugins/`+n.replace(/\.\/|\.js/g,''))
+});
+
 // 引入样式
-import './styles/element.scss'
-import './styles/main.scss'
+require.context('./styles', true, /.(scss|css)$/).keys().forEach(function (n) {
+  n = n.replace(/\.\//g,'')
+  let name = n.split('/')
+  name = name[name.length-1]
+  if(n === 'variables.scss' || name.indexOf('_') === 0) return;
+  require(`./styles/`+n)
+});
 
 // 挂载api请求
-const requestFiles = require.context('./requests', true, /.js$/).keys();
 Vue.use({
   install(Vue){
-    Vue.prototype.$request = requireJs(requestFiles,'requests')
+    Vue.prototype.$request = requireJs(require.context('./requests', true, /.js$/).keys(),'requests')
   }
 })
 
 // 挂载工具
-const utilFiles = require.context('./utils', true, /.js$/).keys()
 Vue.use({
   install(Vue){
-    Vue.prototype.$util = requireJs(utilFiles,'utils')
+    Vue.prototype.$util = requireJs(require.context('./utils', true, /.js$/).keys(),'utils')
   }
 })
 
-// 自动注册layout和component为全局组件
-const layouts = require.context('./layouts', true, /.vue$/).keys()
-const components = require.context('./components', true, /.vue$/).keys()
+// 注册component全局组件
 Vue.use({
   install:function (Vue){
-    const map = {
-      layouts:layouts,
-      components:components
-    };
+    require.context('./components', true, /.vue$/).keys().forEach(function (n) {
+      n = n.replace(/\.\/|\.vue/g,'')
 
-    for(let folder in map){
-      map[folder].forEach(function (n) {
-        const path = n.replace(/\.\/|\.vue/g,'')
-        let name = path.split('/')
-        name = name[name.length-1]
-        name.replace(name[0],name[0].toUpperCase())
+      if(n.indexOf('_') === 0) return;
 
-        Vue.component(name,()=>import(`./${folder}/`+path))
-      });
-    }
+      let name = n.split('/')
+      name = name[name.length-1]
+      name = name.replace(name[0],name[0].toUpperCase())
+
+      Vue.component(name,()=>import(`./components/`+n))
+    });
   }
 })
 
