@@ -35,18 +35,20 @@ Vue.use({
 })
 
 // 注册component全局组件
+const requireComponents = require.context('./components', true, /.vue$/);
 Vue.use({
   install:function (Vue){
-    require.context('./components', true, /.vue$/).keys().forEach(function (n) {
-      n = n.replace(/\.\/|\.vue/g,'')
 
-      if(n.indexOf('_') === 0) return;
+    requireComponents.keys().forEach(function (n) {
+      const _n = n.replace(/\.\/|\.vue/g,'')
 
-      let name = n.split('/')
+      if(_n.indexOf('_') === 0) return;
+
+      let name = _n.split('/')
       name = name[name.length-1]
       name = name.replace(name[0],name[0].toUpperCase())
 
-      Vue.component(name,()=>import(`./components/`+n))
+      Vue.component(name,requireComponents(n).default)
     });
   }
 })

@@ -8,7 +8,8 @@ Vue.use(Router)
 // default 布局路由默认跳转的路由页，一个布局下路由至多设置一个，否则将取最后一个。如果一个布局下未设置此值，将取第一个作为跳转页。
 
 let layouts = {};
-require.context('./layouts', true, /.vue$/).keys().forEach(function (n) {
+const layoutComponents = require.context('./layouts', true, /.vue$/);
+layoutComponents.keys().forEach(function (n) {
   const path = n.replace(/\.\/|\.vue/g,'')
   let name = path.split('/')
   name = name[name.length-1]
@@ -16,7 +17,7 @@ require.context('./layouts', true, /.vue$/).keys().forEach(function (n) {
   layouts[name] = {
     path: '/'+ (name === 'default'?'':name),
     name:name+'Layout',
-    component:() => import(`./layouts/` + path),
+    component:layoutComponents(n).default,
     children:[],
   }
 });
