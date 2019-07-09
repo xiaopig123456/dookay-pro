@@ -13,10 +13,12 @@ npm run build （生产）
 ```
 dookay-pro
 ├── public
+|   ├── img （图片，可选）
 |   ├── favicon.ico
 |   ├── index.html
 ├── src
 |   ├── assets
+│   |   └── img （图片，可选）
 |   ├── components （组件）
 |   ├── layouts （布局）
 │   |   └── Default.vue
@@ -48,6 +50,9 @@ dookay-pro
 ├── vue.config.js
 ```
 ## 使用约束
+
+### 图片
+- `src/assets/img`文件夹下的图片会base64编码进css中，增加css文件的体积，所以无需编码的图片请放到`public/img`文件夹下。
 
 ### 组件
 - `src/components` 组件目录下的组件会被注册为全局组件，在`src/views`页面中使用无需import引入。
