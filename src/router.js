@@ -37,10 +37,11 @@ require.context('./routers', true, /.js$/).keys().forEach(function (n) {
     if(r.meta.layout){
       r.meta.layout = r.meta.layout.replace(r.meta.layout[0],r.meta.layout[0].toLowerCase())
       if(typeof layouts[r.meta.layout] !== 'undefined'){
-        layouts[r.meta.layout].children.push(r)
         if(r.meta.default){
           redirect[r.meta.layout] = layouts[r.meta.layout].path + r.path
         }
+        if(r.path && r.path.indexOf('/') === 0) r.path = r.path.substr(1);
+        layouts[r.meta.layout].children.push(r)
       }else{
         routers.push(r)
       }
@@ -57,7 +58,7 @@ for(let name in layouts){
   if(typeof redirect[name] !== 'undefined'){
     _route.redirect = redirect[name];
   }else{
-    _route.redirect = _route.path + _route.children[0].path;
+    _route.redirect = _route.path + '/' + _route.children[0].path;
   }
   _route.redirect = _route.redirect.replace('//','/')
   routers.unshift(_route)
