@@ -1,0 +1,18 @@
+@import "./reboot";
+html,body,#app{
+  height: 100%;
+}
+
+/* 侧导航 */
+.el-menu{
+  user-select: none;
+
+  [class^="ion-"]{
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+    width: 24px;
+    text-align: center;
+    font-size: 18px;
+  }
+}

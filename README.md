@@ -9,6 +9,10 @@ npm run serve （开发）
 npm run build （生产）
 ```
 
+## 使用框架
+- 使用[element-ui](https://element.eleme.cn/#/zh-CN/component/installation)作为基础框架
+- 引入[ionicons4.6.1](https://ionicons.com/)图标库，使用`ion-md-*`或`ion-ios-*`
+
 ## 目录结构
 ```
 dookay-pro
