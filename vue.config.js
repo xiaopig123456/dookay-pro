@@ -5,7 +5,7 @@ module.exports = {
   css: {
     loaderOptions: {
       sass: {
-        data: `@import "@/styles/variables.scss";`
+        data: `$--color-primary:${process.env.VUE_APP_PRIMARY_COLOR};@import "@/styles/variables.scss";`
       }
     }
   },
