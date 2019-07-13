@@ -7,21 +7,24 @@
         <el-aside width="256px" class="dk-aside">
             <div class="dk-aside-brand">
                 <a href="#">
-                    <img src="../assets/img/logo.png">
+                    <img src="../assets/img/logo-small.png" height="50">
                 </a>
+                <h1>{{title}}</h1>
             </div>
-            <el-menu
-                    unique-opened
-                    background-color="#001529"
-                    text-color="#fff"
-                    active-text-color="#409EFF"
-                    @select="menuSelect"
-            >
-                <template v-for="(item,i) in menuList">
-                    <sub-menu v-if="item.children && item.children.length>0" :menu="item" :key="i"></sub-menu>
-                    <el-menu-item v-else :index="item.id" :key="i"><i :class="item.icon?item.icon:'el-icon-document'"></i>{{item.title}}</el-menu-item>
-                </template>
-            </el-menu>
+            <div class="dk-aside-menu-wrapper dk-scrollbar-prettify">
+                <el-menu
+                        :mode="'vertical'"
+                        :collapse="false"
+                        unique-opened
+                        @select="menuSelect"
+                        class="dk-aside-menu"
+                >
+                    <template v-for="(item,i) in menuList">
+                        <sub-menu popper-class="dk-slide-popper" v-if="item.children && item.children.length>0" :menu="item" :key="i"></sub-menu>
+                        <el-menu-item v-else :index="item.id" :key="i"><i :class="item.icon?item.icon:'el-icon-document'"></i><span slot="title">{{item.title}}</span></el-menu-item>
+                    </template>
+                </el-menu>
+            </div>
         </el-aside>
         <!-- 主内容 -->
         <el-container class="dk-container">
@@ -78,6 +81,8 @@
     components: {SubMenu},
     data() {
       return {
+        title:process.env.VUE_APP_TITLE,
+
         // 菜单列表
         menuList: [
           {id:"1",icon:'el-icon-odometer',title: '仪表盘', children:[

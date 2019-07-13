@@ -1,9 +1,8 @@
 @import "./reboot";
-html,body,#app{
+html,body,#app,.dk-wrapper{
   height: 100%;
 }
 
-/* 侧导航 */
 .el-menu{
   user-select: none;
 
@@ -15,4 +14,84 @@ html,body,#app{
     text-align: center;
     font-size: 18px;
   }
+  .ion-empty{
+    width: 4px;
+  }
+  .el-menu-item,
+  .el-submenu__title i{
+    -webkit-transition: all .3s;
+    transition: all .3s;
+  }
+
+  .el-submenu .el-menu-item{
+    height: 48px;
+    line-height: 48px;
+  }
+  .el-submenu__title{
+    height: 52px;
+    line-height: 52px;
+  }
+  /*.el-submenu .el-menu-item,
+  .el-submenu__title{
+    height: 40px;
+    line-height: 40px;
+    margin-top: 4px;
+    margin-bottom: 8px;
+  }
+  .el-submenu__title,
+  >.el-menu-item:last-child,
+  >.el-submenu:last-child{
+    margin-bottom: 4px;
+  }*/
 }
+
+.dk-scrollbar-prettify{
+  &::-webkit-scrollbar
+  {
+    width: 6px;
+    height: 10px;
+
+  }
+  &::-webkit-scrollbar-track
+  {
+    border-radius: 6px;
+  }
+  &::-webkit-scrollbar-thumb
+  {
+    border-radius: 6px;
+    background-color: mix($--color-white, $--color-info, 70%);
+  }
+}
+
+/* 侧导航 */
+.dk-aside{
+  display: flex;
+  flex-direction: column;
+  flex-basis: auto;
+
+  .dk-aside-menu-wrapper{
+    height: 100%;
+    overflow-y: auto;
+
+    .el-scrollbar__wrap{
+      overflow-x: hidden;
+    }
+  }
+  .dk-aside-brand{
+    height: 64px;
+  }
+
+  .dk-aside-menu{
+    padding: 16px 0;
+  }
+
+  .dk-aside-menu.el-menu--horizontal{
+    padding: 0;
+    border:none;
+  }
+}
+
+
+/* 主题色 */
+@import "./theme_light";
+@import "./theme_dark";

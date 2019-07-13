@@ -75,6 +75,7 @@ import {
   PageHeader,
   CascaderPanel,
   Avatar,
+  Scrollbar,
   Loading,
   MessageBox,
   Message,
@@ -155,6 +156,7 @@ Vue.use(Backtop);
 Vue.use(PageHeader);
 Vue.use(CascaderPanel);
 Vue.use(Avatar);
+Vue.use(Scrollbar);
 
 Vue.use(Loading.directive);
 
