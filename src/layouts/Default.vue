@@ -2,70 +2,36 @@
     <!--https://www.cnblogs.com/wangmaoling/p/9719443.html
     "color-js": "^1.0.5",
     -->
-    <el-container class="dk-wrapper">
+    <el-container :class="['dk-wrapper','dk-layout-'+ layout,'dk-header-'+ fixedHeader,asideIsOpened?'dk-aside-opened':'',fixedAside?'dk-aside-fixed':'']">
         <!-- 侧导航 -->
-        <el-aside width="256px" class="dk-aside">
-            <div class="dk-aside-brand">
-                <a href="#">
-                    <img src="../assets/img/logo-small.png" height="50">
-                </a>
-                <h1>{{title}}</h1>
-            </div>
-            <div class="dk-aside-menu-wrapper dk-scrollbar-prettify">
-                <el-menu
-                        :mode="'vertical'"
-                        :collapse="false"
-                        unique-opened
-                        @select="menuSelect"
-                        class="dk-aside-menu"
-                >
-                    <template v-for="(item,i) in menuList">
-                        <sub-menu popper-class="dk-slide-popper" v-if="item.children && item.children.length>0" :menu="item" :key="i"></sub-menu>
-                        <el-menu-item v-else :index="item.id" :key="i"><i :class="item.icon?item.icon:'el-icon-document'"></i><span slot="title">{{item.title}}</span></el-menu-item>
-                    </template>
-                </el-menu>
+        <el-aside class="dk-aside-wrapper">
+            <div class="dk-aside">
+                <div class="dk-aside-brand">
+                    <a href="javascript:void(0);">
+                        <img src="../assets/img/logo-small.png">
+                    </a>
+                    <h1>{{title}}</h1>
+                </div>
+                <div class="dk-aside-menu-wrapper dk-scrollbar-prettify">
+                    <el-menu
+                            :mode="layout === 'top'?'horizontal':'vertical'"
+                            :collapse="!asideIsOpened"
+                            unique-opened
+                            @select="menuSelect"
+                            class="dk-aside-menu"
+                    >
+                        <template v-for="(item,i) in menuList">
+                            <sub-menu popper-class="dk-slide-popper" v-if="item.children && item.children.length>0" :menu="item" :key="i"></sub-menu>
+                            <el-menu-item v-else :index="item.id" :key="i"><i :class="item.icon?item.icon:'el-icon-document'"></i><span slot="title">{{item.title}}</span></el-menu-item>
+                        </template>
+                    </el-menu>
+                </div>
+                <top-menu v-if="layout === 'top'" v-on:aside-collapse="asideCollapse"></top-menu>
             </div>
         </el-aside>
         <!-- 主内容 -->
         <el-container class="dk-container">
-            <!-- 顶部导航 -->
-            <el-header class="dk-header">
-                <el-button icon="el-icon-s-fold"></el-button>
-                <div class="dk-header-right">
-                    <div class="dk-header-search">
-                        <i class="ion-md-search"></i>
-                        <el-autocomplete class="inline-input" v-model="searchValue"
-                                         :fetch-suggestions="searchAutocompleteQuery"
-                                         placeholder="站内搜索"
-                                         @select="searchAutocompleteHandle"
-                                         @keypress.enter.native="searchAutocompleteHandle"
-                        ></el-autocomplete>
-                    </div>
-                    <el-tooltip class="item" effect="dark" content="使用文档" placement="bottom">
-                        <el-button icon="ion-md-help-circle-outline"></el-button>
-                    </el-tooltip>
-                    <el-button size="small">
-                        <el-badge :value="11" class="item">
-                            <i class="ion-md-notifications-outline"></i>
-                        </el-badge>
-                    </el-button>
-                    <el-dropdown>
-                        <el-avatar icon="el-icon-user-solid"></el-avatar>
-                        <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item icon="el-icon-user">个人中心</el-dropdown-item>
-                            <el-dropdown-item icon="el-icon-setting">个人设置</el-dropdown-item>
-                            <el-dropdown-item icon="ion-md-log-out" divided>退出登录</el-dropdown-item>
-                        </el-dropdown-menu>
-                    </el-dropdown>
-                    <el-dropdown>
-                        <el-button icon="ion-ios-globe"></el-button>
-                        <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item class="active">CN 中文站点</el-dropdown-item>
-                            <el-dropdown-item>EN 英文站点</el-dropdown-item>
-                        </el-dropdown-menu>
-                    </el-dropdown>
-                </div>
-            </el-header>
+            <top-menu v-if="layout === 'aside'" v-on:aside-collapse="asideCollapse"></top-menu>
             <!-- 内容部分 -->
             <el-main class="dk-main">
                 <router-view/>
@@ -75,13 +41,22 @@
 </template>
 
 <script>
-    import SubMenu from '../components/_menu/SubMenu';
+    import SubMenu from '../components/_menu/SubMenu'
+    import TopMenu from '../components/_menu/TopMenu'
+    import Headroom from 'headroom.js'
+
   export default {
     name: "Default",
-    components: {SubMenu},
+    components: {SubMenu,TopMenu},
     data() {
       return {
         title:process.env.VUE_APP_TITLE,
+        layout:process.env.VUE_APP_LAYOUT,
+        fixedHeader:process.env.VUE_APP_FIXED_HEADER,
+        fixedAside:process.env.VUE_APP_FIX_ASIDE_NAV !== 'false',
+
+        // 侧边栏
+        asideIsOpened:true,
 
         // 菜单列表
         menuList: [
@@ -128,30 +103,16 @@
             ]
           },
         ],
-
-        // 搜索值
-        searchValue: '',
+      }
+    },
+    mounted(){
+      if(this.fixedHeader === 'auto'){
+        new Headroom(document.querySelector('.dk-header'),{
+          offset :64,
+        }).init();
       }
     },
     methods: {
-      /**
-       * 搜索
-       * @param queryString
-       * @param cb
-       */
-      searchAutocompleteQuery(queryString, cb) {
-        let results = !queryString ? [] : [
-          {value: queryString},
-          {value: queryString + queryString},
-          {value: queryString + queryString + queryString + queryString},
-        ]
-        cb(results);
-      },
-      searchAutocompleteHandle() {
-        if (!this.searchValue) return;
-        this.$message.info(`您搜索的是“${this.searchValue}”。`);
-      },
-
       /**
        * 菜单选中
        * @param index
@@ -175,6 +136,14 @@
           };
         const selectItem = findMenuItem(self.menuList);
         self.$message.info(`你点击了侧导航“${selectItem.title}”。`)
+      },
+
+      /**
+       * 侧边栏展开收起状态
+       * @param isOpened
+       */
+      asideCollapse(isOpened){
+        this.asideIsOpened = isOpened;
       }
     }
   }

@@ -1,6 +1,17 @@
 .dk-theme-light{
-  .dk-aside{
+  .dk-aside-wrapper{
     box-shadow: 2px 0 8px 0 rgba(29,35,41,.05);
+    background-color: $--color-white;
+  }
+
+  .dk-aside{
+    .dk-aside-brand{
+      box-shadow: 1px 1px 0 0 #e8e8e8;
+
+      h1{
+        color: $--color-primary;
+      }
+    }
   }
 
   .dk-aside,
