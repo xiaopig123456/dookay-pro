@@ -48,14 +48,20 @@
 </template>
 
 <script>
+
   export default {
     name: "TopMenu",
+    props:{
+      value:{
+        type:Boolean,
+        default:true
+      }
+    },
     data(){
       return {
         layout:process.env.VUE_APP_LAYOUT,
 
-        // 侧边栏
-        asideIsOpened:true,
+        asideIsOpened:this.value,
 
         // 搜索
         searchIsOpened:false,
@@ -69,6 +75,7 @@
        * @param cb
        */
       searchAutocompleteQuery(queryString, cb) {
+        // 自动完成
         let results = !queryString ? [] : [
           {value: queryString},
           {value: queryString + queryString},
@@ -96,6 +103,14 @@
         this.asideIsOpened = isOpened;
         this.$emit('aside-collapse',isOpened);
       },
+    },
+    watch: {
+      value:function(newVal) {
+        this.asideIsOpened = newVal
+      },
+      asideIsOpened:function () {
+        this.$emit('input', this.asideIsOpened)
+      }
     }
   }
 </script>

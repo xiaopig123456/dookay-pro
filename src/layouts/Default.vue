@@ -1,11 +1,8 @@
 <template>
-    <!--https://www.cnblogs.com/wangmaoling/p/9719443.html
-    "color-js": "^1.0.5",
-    -->
-    <el-container :class="['dk-wrapper','dk-layout-'+ layout,'dk-header-'+ fixedHeader,asideIsOpened?'dk-aside-opened':'',fixedAside?'dk-aside-fixed':'']">
+    <el-container :class="['dk-wrapper','dk-screen-'+screen,'dk-layout-'+ layout,'dk-header-'+ fixedHeader,asideIsOpened?'dk-aside-opened':'',fixedAside?'dk-aside-fixed':'']">
         <!-- 侧导航 -->
         <el-aside class="dk-aside-wrapper">
-            <div class="dk-aside">
+            <div class="dk-aside" :style="{left:screen === 'xs'?(screenXsAsideIsOpened?'0':'-256px'):0}">
                 <div class="dk-aside-brand">
                     <a href="javascript:void(0);">
                         <img src="../assets/img/logo-small.png">
@@ -15,7 +12,7 @@
                 <div class="dk-aside-menu-wrapper dk-scrollbar-prettify">
                     <el-menu
                             :mode="layout === 'top'?'horizontal':'vertical'"
-                            :collapse="!asideIsOpened"
+                            :collapse="screen === 'xs'?false:!asideComponentStatus"
                             unique-opened
                             @select="menuSelect"
                             class="dk-aside-menu"
@@ -26,12 +23,16 @@
                         </template>
                     </el-menu>
                 </div>
-                <top-menu v-if="layout === 'top'" v-on:aside-collapse="asideCollapse"></top-menu>
+                <top-menu v-if="layout === 'top'" v-model="asideComponentStatus"></top-menu>
             </div>
+
+            <transition name="el-fade-in">
+                <div v-if="screen === 'xs' && screenXsAsideIsOpened" class="dk-aside-mask" @click="asideComponentStatus = false"></div>
+            </transition>
         </el-aside>
         <!-- 主内容 -->
         <el-container class="dk-container">
-            <top-menu v-if="layout === 'aside'" v-on:aside-collapse="asideCollapse"></top-menu>
+            <top-menu v-if="layout === 'aside'" v-model="asideComponentStatus"></top-menu>
             <!-- 内容部分 -->
             <el-main class="dk-main">
                 <router-view/>
@@ -44,6 +45,7 @@
     import SubMenu from '../components/_menu/SubMenu'
     import TopMenu from '../components/_menu/TopMenu'
     import Headroom from 'headroom.js'
+    import enquire from 'enquire.js';
 
   export default {
     name: "Default",
@@ -54,9 +56,12 @@
         layout:process.env.VUE_APP_LAYOUT,
         fixedHeader:process.env.VUE_APP_FIXED_HEADER,
         fixedAside:process.env.VUE_APP_FIX_ASIDE_NAV !== 'false',
+        screen:'lg',
 
         // 侧边栏
+        asideComponentStatus:true,
         asideIsOpened:true,
+        screenXsAsideIsOpened:false,
 
         // 菜单列表
         menuList: [
@@ -106,11 +111,29 @@
       }
     },
     mounted(){
-      if(this.fixedHeader === 'auto'){
+      const self = this;
+      // 自动固定顶部导航
+      if(self.fixedHeader === 'auto'){
         new Headroom(document.querySelector('.dk-header'),{
           offset :64,
         }).init();
       }
+
+      // 屏幕宽度响应
+      self.$util.forEach({
+        xs: '(max-width: 575.98px)',
+        sm: '(min-width: 576px) and (max-width: 767.98px)',
+        md: '(min-width: 768px) and (max-width: 991.98px)',
+        lg: '(min-width: 992px) and (max-width: 1199.98px)',
+        xl: '(min-width: 1200px) and (max-width: 1599.98px)',
+        xxl: '(min-width: 1600px)'
+      },function (n,k) {
+        enquire.register("screen and "+n,{
+          match:function () {
+            self.screen = k;
+          }
+        })
+      })
     },
     methods: {
       /**
@@ -136,14 +159,27 @@
           };
         const selectItem = findMenuItem(self.menuList);
         self.$message.info(`你点击了侧导航“${selectItem.title}”。`)
-      },
+      }
+    },
 
-      /**
-       * 侧边栏展开收起状态
-       * @param isOpened
-       */
-      asideCollapse(isOpened){
-        this.asideIsOpened = isOpened;
+    watch:{
+      screen(val){
+        if(val === 'md' || val === 'sm' || val === 'xs'){
+          this.asideComponentStatus = false;
+          this.asideIsOpened = false;
+        }else{
+          this.asideComponentStatus = true;
+          this.asideIsOpened = true;
+        }
+      },
+      asideComponentStatus(val){
+        if(this.screen === 'xs'){
+          this.screenXsAsideIsOpened = val;
+          this.asideIsOpened = true;
+        }else{
+          this.screenXsAsideIsOpened = false;
+          this.asideIsOpened = val;
+        }
       }
     }
   }

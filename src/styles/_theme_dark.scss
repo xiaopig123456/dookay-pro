@@ -1,9 +1,5 @@
 // 深色主题
 .dk-theme-dark{
-  .dk-aside-wrapper{
-    box-shadow: 2px 0 6px rgba(0,21,41,.35);
-    background-color: $--color-theme-dark;
-  }
 
   .dk-aside,
   .dk-slide-popper {
@@ -45,6 +41,9 @@
   }
 
   .dk-aside{
+    background-color: $--color-theme-dark;
+    box-shadow: 2px 0 6px rgba(0,21,41,.35);
+
     .dk-scrollbar-prettify::-webkit-scrollbar-thumb{
       background-color: mix($--color-white, $--color-theme-dark, 25%);
     }
