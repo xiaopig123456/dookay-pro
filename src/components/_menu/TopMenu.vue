@@ -1,7 +1,7 @@
 <template>
     <el-header class="dk-header-wrapper">
         <div class="dk-header">
-            <el-button v-if="layout === 'aside'" :icon="asideIsOpened?'el-icon-s-fold':'el-icon-s-unfold'" @click="closeAside(!asideIsOpened)"></el-button>
+            <el-button v-if="layout === 'aside' || (layout === 'top' && (screen === 'xs' || screen === 'sm'))" :icon="asideIsOpened?'el-icon-s-fold':'el-icon-s-unfold'" @click="closeAside(!asideIsOpened)"></el-button>
             <div class="dk-header-right">
                 <div :class="['dk-header-search',searchIsOpened?'dk-header-search-opened':'']">
                     <el-button icon="ion-md-search" @click="headerSearchHandle(!searchIsOpened)"></el-button>
@@ -10,6 +10,7 @@
                                      size="small"
                                      popper-class="search-popper"
                                      v-model="searchValue"
+                                     type="search"
                                      :fetch-suggestions="searchAutocompleteQuery"
                                      placeholder="站内搜索"
                                      :select-when-unmatched = "true"
@@ -22,7 +23,7 @@
                 </el-tooltip>
                 <el-button class="dk-header-btn-notifications" size="small">
                     <el-badge :value="11" class="item">
-                        <i class="ion-ios-notifications-outline"></i>
+                        <i class="el-icon-bell"></i>
                     </el-badge>
                 </el-button>
                 <el-dropdown>
@@ -55,7 +56,8 @@
       value:{
         type:Boolean,
         default:true
-      }
+      },
+      screen:String,
     },
     data(){
       return {

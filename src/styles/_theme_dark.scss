@@ -81,4 +81,42 @@
     color: $--color-primary;
     background-color: transparent;
   }
+
+  .dk-layout-top{
+    .dk-aside-wrapper{
+      background-color: $--color-theme-dark;
+    }
+
+    .dk-header-wrapper{
+      background-color:$--color-theme-dark;
+
+      .dk-header{
+        background-color: transparent;
+
+        .dk-header-right{
+          background-color: transparent;
+
+          .el-button{
+            background-color:$--color-theme-dark;
+            color: hsla(0,0%,100%,.65);
+            &:hover,
+            &:focus{
+              background-color: mix($--color-theme-dark,$--color-white,90);
+            }
+
+            > i{
+              color: hsla(0,0%,100%,.65);
+            }
+          }
+        }
+        .dk-header-search{
+          background-color:$--color-theme-dark;
+        }
+        .dk-header-search-opened,
+        .dk-header-search-opened>.el-button{
+          background-color: mix($--color-theme-dark,$--color-white,90);
+        }
+      }
+    }
+  }
 }

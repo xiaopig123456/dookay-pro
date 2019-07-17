@@ -19,7 +19,12 @@ abbr[data-original-title] {
   cursor: help;
   border-bottom: 0;
 }
-
+a{
+  text-decoration: none;
+}
+p{
+  margin: 0;
+}
 address {
   margin-bottom: 16px;
   font-style: normal;

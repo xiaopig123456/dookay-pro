@@ -1,18 +1,18 @@
 <template>
-    <el-container :class="['dk-wrapper','dk-screen-'+screen,'dk-layout-'+ layout,'dk-header-'+ fixedHeader,asideIsOpened?'dk-aside-opened':'',fixedAside?'dk-aside-fixed':'']">
+    <el-container :class="['dk-wrapper','dk-screen-'+screen,(isSmallScreen?'dk-layout-aside':'dk-layout-'+ layout),'dk-header-'+ fixedHeader,asideIsOpened?'dk-aside-opened':'',fixedAside?'dk-aside-fixed':'']">
         <!-- 侧导航 -->
         <el-aside class="dk-aside-wrapper">
-            <div class="dk-aside" :style="{left:screen === 'xs'?(screenXsAsideIsOpened?'0':'-256px'):0}">
+            <div class="dk-aside" :style="{left:isSmallScreen?(screenXsAsideIsOpened?'0':'-256px'):0}">
                 <div class="dk-aside-brand">
                     <a href="javascript:void(0);">
-                        <img src="../assets/img/logo-small.png">
+                        <img src="../assets/img/logo.png">
                     </a>
                     <h1>{{title}}</h1>
                 </div>
                 <div class="dk-aside-menu-wrapper dk-scrollbar-prettify">
                     <el-menu
-                            :mode="layout === 'top'?'horizontal':'vertical'"
-                            :collapse="screen === 'xs'?false:!asideComponentStatus"
+                            :mode="layout === 'top' && !isSmallScreen?'horizontal':'vertical'"
+                            :collapse="isSmallScreen?false:(layout === 'top'?false:!asideComponentStatus)"
                             unique-opened
                             @select="menuSelect"
                             class="dk-aside-menu"
@@ -23,16 +23,16 @@
                         </template>
                     </el-menu>
                 </div>
-                <top-menu v-if="layout === 'top'" v-model="asideComponentStatus"></top-menu>
+                <top-menu v-if="layout === 'top' && !isSmallScreen" :screen="screen" v-model="asideComponentStatus"></top-menu>
             </div>
 
             <transition name="el-fade-in">
-                <div v-if="screen === 'xs' && screenXsAsideIsOpened" class="dk-aside-mask" @click="asideComponentStatus = false"></div>
+                <div v-if="isSmallScreen && screenXsAsideIsOpened" class="dk-aside-mask" @click="asideComponentStatus = false"></div>
             </transition>
         </el-aside>
         <!-- 主内容 -->
         <el-container class="dk-container">
-            <top-menu v-if="layout === 'aside'" v-model="asideComponentStatus"></top-menu>
+            <top-menu v-if="layout === 'aside' || (layout === 'top' && isSmallScreen)" :screen="screen" v-model="asideComponentStatus"></top-menu>
             <!-- 内容部分 -->
             <el-main class="dk-main">
                 <router-view/>
@@ -56,7 +56,7 @@
         layout:process.env.VUE_APP_LAYOUT,
         fixedHeader:process.env.VUE_APP_FIXED_HEADER,
         fixedAside:process.env.VUE_APP_FIX_ASIDE_NAV !== 'false',
-        screen:'lg',
+        screen:'',
 
         // 侧边栏
         asideComponentStatus:true,
@@ -110,6 +110,11 @@
         ],
       }
     },
+    computed:{
+      isSmallScreen(){
+        return this.screen === 'xs' || this.screen === 'sm'
+      }
+    },
     mounted(){
       const self = this;
       // 自动固定顶部导航
@@ -158,8 +163,11 @@
             return res;
           };
         const selectItem = findMenuItem(self.menuList);
+
+        if(self.isSmallScreen)self.asideComponentStatus = false;
+
         self.$message.info(`你点击了侧导航“${selectItem.title}”。`)
-      }
+      },
     },
 
     watch:{
@@ -173,14 +181,17 @@
         }
       },
       asideComponentStatus(val){
-        if(this.screen === 'xs'){
+        if(this.isSmallScreen){
           this.screenXsAsideIsOpened = val;
           this.asideIsOpened = true;
         }else{
           this.screenXsAsideIsOpened = false;
           this.asideIsOpened = val;
         }
-      }
+      },
+      screenXsAsideIsOpened(val){
+        document.body.style.overflow = val?'hidden':'';
+      },
     }
   }
 </script>

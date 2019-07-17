@@ -9,9 +9,35 @@ html,body,#app{
 }
 
 .dk-container{
-  background-color: #f0f2f5;
-  min-height: 100%;
+  background-color: $--color-background;
   flex-direction: column;
+}
+
+.el-input__prefix{
+  left: 10px;
+  line-height: 38px;
+}
+.el-input__suffix{
+  right: 10px;
+  line-height: 38px;
+}
+
+.dk-form-item-text{
+  margin-bottom: 5px;
+  margin-top: -10px;
+  color: $--color-text-regular;
+
+  .dk-form-item-text-title{
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  a{
+    color: $--color-primary;
+    &:hover{
+      text-decoration: underline;
+    }
+  }
 }
 
 .el-menu{
@@ -33,7 +59,11 @@ html,body,#app{
     -webkit-transition: color .3s;
     transition: color .3s;
   }
-
+  .el-submenu{
+    &:focus{
+      outline: none;
+    }
+  }
   .el-submenu .el-menu-item{
     height: 48px;
     line-height: 48px;
@@ -72,6 +102,22 @@ html,body,#app{
     border-radius: 6px;
     background-color: mix($--color-white, $--color-info, 70%);
   }
+}
+
+.dk-pull-right{
+  float: right;
+}
+.dk-pull-left{
+  float: left;
+}
+
+.dk-btn-block{
+  display: block;
+  width: 100%;
+}
+
+#nprogress .bar{
+  background-color: $--color-primary;
 }
 
 /* 侧导航 */
@@ -259,7 +305,6 @@ html,body,#app{
     }
     .dk-header-search{
       display: inline-block;
-      padding: 0 12px;
       cursor: pointer;
       line-height: 0;
       height: 100%;
@@ -332,7 +377,8 @@ html,body,#app{
   transform: translateY(-100%);
 }
 
-.dk-screen-xs{
+.dk-screen-xs,
+.dk-screen-sm{
   .dk-aside-wrapper{
     width: 0!important;
   }
@@ -367,26 +413,40 @@ html,body,#app{
 }
 
 /* 布局 */
+.dk-layout-aside{
+  .dk-container{
+    min-height: 100%;
+  }
+}
 .dk-layout-top{
-  background-color:#f0f2f5;
+  background-color:$--color-background;
   display: block;
   min-height: auto;
 
   .dk-aside-wrapper{
     height: 64px;
     width: 100%!important;
+    background-color: $--color-white;
+    box-shadow: 0 1px 4px rgba(0,21,41,.08);
+
+    .el-badge__content{
+      border:none;
+    }
   }
 
   .dk-aside{
     position: relative;
     height: 64px;
+    box-shadow: none!important;
 
     .dk-aside-brand{
-      padding-left: 0;
+      padding-left: 10px;
       float: left;
       padding-right: 20px;
+      box-shadow: none!important;
 
       h1{
+        display: inline-block;
         font-weight: normal;
         font-size: 16px;
       }
@@ -411,27 +471,181 @@ html,body,#app{
         display: none;
       }
     }
+
+    .el-menu > .el-submenu>.el-submenu__title span{
+      opacity: 1;
+    }
   }
 
   .dk-header-wrapper{
-    float: right;
+    position: absolute;
+    right: 0;
     height: 64px!important;
+    background-color:$--color-white;
+
+    .dk-header{
+      background-color: transparent;
+      box-shadow: none;
+
+      .dk-header-right{
+        position: static;
+      }
+
+      .dk-header-search{
+        input{
+          padding: 0 15px;
+        }
+      }
+
+      .dk-header-search-opened{
+        padding-left: 0;
+        padding-right: 15px;
+      }
+    }
   }
 }
-
 .dk-screen-xl.dk-layout-top,
 .dk-screen-xxl.dk-layout-top{
   .dk-aside,
   .dk-container{
-    width: 1200px;
+    width: 1170px;
     margin: 0 auto;
   }
   .dk-container{
+    display: block;
     background-color: transparent;
   }
   .dk-main{
     padding-left: 0;
     padding-right: 0;
+  }
+
+  .dk-aside-brand{
+    padding-left: 0;
+  }
+}
+.dk-screen-md.dk-layout-top{
+  .dk-container{
+    display: block;
+  }
+}
+
+/* footer底部 */
+.dk-footer{
+  height: auto!important;
+  text-align: center;
+  color: $--color-info;
+  font-size: 14px;
+  line-height: 22px;
+  margin: 48px 0 24px;
+
+  a{
+    color: $--color-info;
+
+    &:hover{
+      color: $--color-primary;
+    }
+  }
+
+  .dk-footer-menu{
+    margin-bottom: 8px;
+
+    a:first-child{
+      margin-left: 0;
+    }
+    a{
+      margin-left: 10px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .dk-footer-nav-logo{
+      margin: 0 20px 0 30px;
+      img{
+        display: block;
+        height: 14px;
+      }
+    }
+  }
+}
+
+/* passport页面 */
+.dk-passport-layout{
+  background:$--color-background url(../assets/img/passport-bg.svg) center 110px no-repeat;
+  background-size: 100%;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.dk-passport-main{
+  width: 410px;
+  margin: 0 auto;
+  padding-top: 72px;
+
+  .dk-passport-brand{
+    text-align: center;
+    img{
+      height: 44px;
+      margin-right: 16px;
+      vertical-align: top;
+    }
+    h1{
+      color: $--color-text-primary;
+      display: inline-block;
+      font-weight: 600;
+      font-size: 33px;
+      margin: 0;
+      height: 44px;
+      vertical-align: top;
+      line-height: 44px;
+    }
+
+    .dk-passport-brand-desc{
+      margin-top: 15px;
+      margin-bottom: 40px;
+      color: $--color-info;
+      font-size: 14px;
+      line-height: 22px;
+    }
+  }
+
+  .dk-passport-form-tab{
+    .el-tabs__header{
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .el-tabs__nav-wrap{
+      &:after{
+        display: none;
+      }
+    }
+    .el-tabs__nav{
+      display: inline-block;
+      float: none;
+    }
+  }
+
+  .dk-passport-other-login{
+    .dk-form-item-text-title{
+      margin-right: 12px;
+    }
+     .el-button{
+       background-color: transparent;
+       border: none;
+       padding: 0;
+       font-size: 24px;
+       color: $--color-text-placeholder;
+       vertical-align: middle;
+
+       &:hover,
+       &:focus{
+         color: $--color-primary;
+       };
+     }
+  }
+}
+@media (max-width: 575.98px) {
+  .dk-passport-main{
+    width: 100%;
   }
 }
 
