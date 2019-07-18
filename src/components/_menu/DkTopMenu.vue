@@ -51,7 +51,7 @@
 <script>
 
   export default {
-    name: "TopMenu",
+    name: "DkTopMenu",
     props:{
       value:{
         type:Boolean,

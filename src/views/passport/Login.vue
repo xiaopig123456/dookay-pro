@@ -1,30 +1,30 @@
 <template>
-    <el-form ref="form" action="javascript:void(0);" @keyup.enter.native="submitForm" :model="form" :rules="rules" label-position="top" label-width="100px">
-        <el-tabs class="dk-passport-form-tab" v-model="activeTab" @tab-click="tabChange">
+    <el-form ref="form" action="javascript:void(0);" @keyup.enter.native="submitForm" :model="form" :rules="rules" label-position="top">
+        <el-tabs class="dk-passport-form-tab" v-model="activeTab">
             <el-tab-pane label="账号密码登录" name="password"></el-tab-pane>
             <el-tab-pane label="手机号登录" name="cellphone"></el-tab-pane>
         </el-tabs>
         <template v-if="activeTab === 'password'">
-            <el-form-item prop="username">
+            <el-form-item prop="username" key="password-1">
                 <el-input v-model="form.username" placeholder="用户名">
                     <i class="el-icon-user" slot="prefix"></i>
                 </el-input>
             </el-form-item>
-            <el-form-item prop="password">
+            <el-form-item prop="password" key="password-2">
                 <el-input type="password" v-model="form.password" placeholder="密码">
                     <i class="el-icon-lock" slot="prefix"></i>
                 </el-input>
             </el-form-item>
         </template>
         <template v-else>
-            <el-form-item prop="cellphone">
+            <el-form-item prop="cellphone" key="register-1">
                 <el-input v-model="form.cellphone" placeholder="手机号">
                     <i class="el-icon-mobile-phone" slot="prefix"></i>
                 </el-input>
             </el-form-item>
-            <el-form-item prop="verificationCode">
+            <el-form-item prop="verificationCode" key="register-2">
                 <el-input v-model="form.verificationCode" placeholder="验证码">
-                    <i class="el-icon-lock" slot="prefix"></i>
+                    <i class="el-icon-message" slot="prefix"></i>
                     <el-button slot="append">获取验证码</el-button>
                 </el-input>
             </el-form-item>
@@ -62,6 +62,7 @@
           username:'',
           password:'',
           rememberMe:true,
+          cellphone:'',
           verificationCode:'',
         },
         rules: {
@@ -93,9 +94,6 @@
               self.formLoading = false;
             },3000);
         })
-      },
-      tabChange(){
-        this.$refs.form.clearValidate();
       }
     },
   }

@@ -18,12 +18,12 @@
                             class="dk-aside-menu"
                     >
                         <template v-for="(item,i) in menuList">
-                            <sub-menu popper-class="dk-slide-popper" v-if="item.children && item.children.length>0" :menu="item" :key="i"></sub-menu>
+                            <dk-sub-menu popper-class="dk-slide-popper" v-if="item.children && item.children.length>0" :menu="item" :key="i"></dk-sub-menu>
                             <el-menu-item v-else :index="item.id" :key="i"><i :class="item.icon?item.icon:'el-icon-document'"></i><span slot="title">{{item.title}}</span></el-menu-item>
                         </template>
                     </el-menu>
                 </div>
-                <top-menu v-if="layout === 'top' && !isSmallScreen" :screen="screen" v-model="asideComponentStatus"></top-menu>
+                <dk-top-menu v-if="layout === 'top' && !isSmallScreen" :screen="screen" v-model="asideComponentStatus"></dk-top-menu>
             </div>
 
             <transition name="el-fade-in">
@@ -32,24 +32,25 @@
         </el-aside>
         <!-- 主内容 -->
         <el-container class="dk-container">
-            <top-menu v-if="layout === 'aside' || (layout === 'top' && isSmallScreen)" :screen="screen" v-model="asideComponentStatus"></top-menu>
+            <dk-top-menu v-if="layout === 'aside' || (layout === 'top' && isSmallScreen)" :screen="screen" v-model="asideComponentStatus"></dk-top-menu>
             <!-- 内容部分 -->
             <el-main class="dk-main">
                 <router-view/>
             </el-main>
+            <dk-footer></dk-footer>
         </el-container>
     </el-container>
 </template>
 
 <script>
-    import SubMenu from '../components/_menu/SubMenu'
-    import TopMenu from '../components/_menu/TopMenu'
+    import DkSubMenu from '../components/_menu/DkSubMenu'
+    import DkTopMenu from '../components/_menu/DkTopMenu'
     import Headroom from 'headroom.js'
     import enquire from 'enquire.js';
 
   export default {
     name: "Default",
-    components: {SubMenu,TopMenu},
+    components: {DkSubMenu,DkTopMenu},
     data() {
       return {
         title:process.env.VUE_APP_TITLE,
@@ -66,7 +67,7 @@
         // 菜单列表
         menuList: [
           {id:"1",icon:'el-icon-odometer',title: '仪表盘', children:[
-              {id:"11",title: '工作台'},
+              {id:"11",title: '工作台',route:{name:'index'}},
             ]},
           {id:"2",icon:'el-icon-edit-outline',title: '表单页', children: [
               {id:"21",title: '基础表单'},
@@ -164,9 +165,13 @@
           };
         const selectItem = findMenuItem(self.menuList);
 
-        if(self.isSmallScreen)self.asideComponentStatus = false;
+        if(self.isSmallScreen) self.asideComponentStatus = false;
 
-        self.$message.info(`你点击了侧导航“${selectItem.title}”。`)
+        if(selectItem.route){
+          self.$router.push(selectItem.route);
+        }else{
+          self.$message.info(`你点击了侧导航“${selectItem.title}”。`)
+        }
       },
     },
 
