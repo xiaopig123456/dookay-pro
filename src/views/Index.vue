@@ -4,7 +4,7 @@
             <el-row :gutter="20">
                 <el-col :span="14">
                     <dk-list class="dk-workplace-user" :list="userInfo" media-shape="circle">
-                        <template slot="header" scope="scope">
+                        <template slot="header" slot-scope="scope">
                             <h4>{{greetings + '，' + scope.item.title}}</h4>
                         </template>
                     </dk-list>
@@ -23,7 +23,7 @@
                 </div>
             </div>
             <dk-list class="dk-list-style-project" :list="dataList" media-shape="circle">
-                <template slot="default" scope="scope">
+                <template slot="default" slot-scope="scope">
                     <div class="dk-list-description">{{scope.item.desc}}</div>
                     <div class="dk-list-style-project-bottom">
                         <span class="dk-pull-right">{{scope.item.time}}</span>
@@ -37,10 +37,10 @@
                 <span>动态</span>
             </div>
             <dk-list class="dk-list-style-dynamic" :list="dataList" media-shape="circle">
-                <template slot="header" scope="scope">
+                <template slot="header" slot-scope="scope">
                     小pig 在 <a href="javascript:void(0);">{{scope.item.username}}</a> 新建项目 <a href="javascript:void(0);">{{scope.item.title}}</a>
                 </template>
-                <template slot="body" scope="scope">
+                <template slot="body" slot-scope="scope">
                     <div class="dk-list-description">{{scope.item.time}}</div>
                 </template>
             </dk-list>
