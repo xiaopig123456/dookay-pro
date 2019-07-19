@@ -2,7 +2,7 @@
     <el-container :class="['dk-wrapper','dk-screen-'+screen,(isSmallScreen?'dk-layout-aside':'dk-layout-'+ layout),'dk-header-'+ fixedHeader,asideIsOpened?'dk-aside-opened':'',fixedAside?'dk-aside-fixed':'']">
         <!-- 侧导航 -->
         <el-aside class="dk-aside-wrapper">
-            <div class="dk-aside" :style="{left:isSmallScreen?(screenXsAsideIsOpened?'0':'-256px'):0}">
+            <div :class="['dk-aside',isSmallScreen?(screenXsAsideIsOpened?'':'dk-aside-mobile-closed'):'']">
                 <div class="dk-aside-brand">
                     <a href="javascript:void(0);">
                         <img src="../assets/img/logo.png">
@@ -46,7 +46,6 @@
     import DkSubMenu from '../components/_menu/DkSubMenu'
     import DkTopMenu from '../components/_menu/DkTopMenu'
     import Headroom from 'headroom.js'
-    import enquire from 'enquire.js';
 
   export default {
     name: "Default",
@@ -57,7 +56,6 @@
         layout:process.env.VUE_APP_LAYOUT,
         fixedHeader:process.env.VUE_APP_FIXED_HEADER,
         fixedAside:process.env.VUE_APP_FIX_ASIDE_NAV !== 'false',
-        screen:'',
 
         // 侧边栏
         asideComponentStatus:true,
@@ -67,12 +65,13 @@
         // 菜单列表
         menuList: [
           {id:"1",icon:'el-icon-odometer',title: '仪表盘', children:[
-              {id:"11",title: '工作台',route:{name:'index'}},
+              {id:"11",title: '首页',route:{name:'index'}},
+              {id:"12",title: '工作台',route:{name:'dashboardWorkplace'}},
             ]},
           {id:"2",icon:'el-icon-edit-outline',title: '表单页', children: [
-              {id:"21",title: '基础表单'},
-              {id:"22",title: '分步表单'},
-              {id:"23",title: '高级表单'},
+              {id:"21",title: '基础表单',route:{name:'formBase'}},
+              {id:"22",title: '分步表单',route:{name:'formStep'}},
+              {id:"23",title: '高级表单',route:{name:'formAdvanced'}},
             ]
           },
           {id:"3",icon:'ion-ios-list',title: '列表页', children: [
@@ -112,34 +111,24 @@
       }
     },
     computed:{
+      screen(){
+        return this.$store.state.screen
+      },
       isSmallScreen(){
         return this.screen === 'xs' || this.screen === 'sm'
       }
     },
     mounted(){
       const self = this;
+
+      self.initScreen(self.screen);
+
       // 自动固定顶部导航
       if(self.fixedHeader === 'auto'){
         new Headroom(document.querySelector('.dk-header'),{
           offset :64,
         }).init();
       }
-
-      // 屏幕宽度响应
-      self.$util.forEach({
-        xs: '(max-width: 575.98px)',
-        sm: '(min-width: 576px) and (max-width: 767.98px)',
-        md: '(min-width: 768px) and (max-width: 991.98px)',
-        lg: '(min-width: 992px) and (max-width: 1199.98px)',
-        xl: '(min-width: 1200px) and (max-width: 1599.98px)',
-        xxl: '(min-width: 1600px)'
-      },function (n,k) {
-        enquire.register("screen and "+n,{
-          match:function () {
-            self.screen = k;
-          }
-        })
-      })
     },
     methods: {
       /**
@@ -173,17 +162,21 @@
           self.$message.info(`你点击了侧导航“${selectItem.title}”。`)
         }
       },
-    },
 
-    watch:{
-      screen(val){
-        if(val === 'md' || val === 'sm' || val === 'xs'){
+      initScreen(screen){
+        if(screen === 'md' || screen === 'sm' || screen === 'xs'){
           this.asideComponentStatus = false;
           this.asideIsOpened = false;
         }else{
           this.asideComponentStatus = true;
           this.asideIsOpened = true;
         }
+      }
+    },
+
+    watch:{
+      screen(val){
+        this.initScreen(val)
       },
       asideComponentStatus(val){
         if(this.isSmallScreen){
@@ -195,7 +188,7 @@
         }
       },
       screenXsAsideIsOpened(val){
-        document.body.style.overflow = val?'hidden':'';
+        document.getElementById('app').style.overflow = val?'hidden':'';
       },
     }
   }

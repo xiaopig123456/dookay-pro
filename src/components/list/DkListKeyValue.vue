@@ -1,7 +1,7 @@
 <template>
     <ul :class="['dk-list-key-value',isButton?'dk-list-key-value-is-button':'']">
         <slot name="prepend"></slot>
-        <li class="dk-list-item" v-for="(item,index) in list" :key="index" @click="e=>{itemClick(e,item,index)}">
+        <li :class="['dk-list-item','dk-text-'+position]" v-for="(item,index) in list" :key="index">
             <div class="dk-list-key" v-html="item.key"></div>
             <div class="dk-list-value" v-html="item.value"></div>
         </li>
@@ -19,15 +19,13 @@
           return []
         }
       },
+      position: {
+        type: String,
+        default: 'center', // 可选的值 left|center|right
+      },
       isButton:{
         type:Boolean,
         default:false
-      }
-    },
-    methods:{
-      itemClick(e,item,index){
-        if(!this.isButton) return;
-        this.$emit('itemClick',e,item,index)
       }
     }
   }

@@ -28,7 +28,7 @@
                 </el-button>
                 <el-dropdown>
                     <el-button>
-                        <el-avatar icon="el-icon-user-solid" :size="24"></el-avatar>
+                        <el-avatar :src="require('../../assets/img/avatar.jpg')" :size="24"></el-avatar>
                     </el-button>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item icon="el-icon-user">个人中心</el-dropdown-item>

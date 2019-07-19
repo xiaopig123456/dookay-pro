@@ -2,7 +2,7 @@ export default [
   {
     path: '/index',
     name:'index',
-    meta: {default:true,title: 'Index'},
+    meta: {default:true,title: '组件'},
     component:()=> import('../views/Index')
   },
   {
