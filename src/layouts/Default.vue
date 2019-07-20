@@ -23,7 +23,7 @@
                         </template>
                     </el-menu>
                 </div>
-                <dk-top-menu v-if="layout === 'top' && !isSmallScreen" :screen="screen" v-model="asideComponentStatus"></dk-top-menu>
+                <dk-top-menu v-if="layout === 'top' && !isSmallScreen" :screen="screen" v-model="asideComponentStatus" key="aside-menu"></dk-top-menu>
             </div>
 
             <transition name="el-fade-in">
@@ -32,7 +32,7 @@
         </el-aside>
         <!-- 主内容 -->
         <el-container class="dk-container">
-            <dk-top-menu v-if="layout === 'aside' || (layout === 'top' && isSmallScreen)" :screen="screen" v-model="asideComponentStatus"></dk-top-menu>
+            <dk-top-menu v-if="layout === 'aside' || (layout === 'top' && isSmallScreen)" :screen="screen" v-model="asideComponentStatus" key="top-menu"></dk-top-menu>
             <!-- 内容部分 -->
             <el-main class="dk-main">
                 <router-view/>
@@ -76,35 +76,35 @@
           },
           {id:"3",icon:'ion-ios-list',title: '列表页', children: [
               {id:"31",title: '搜索列表',children:[
-                  {id:"311",title: '搜索列表（文章）'},
-                  {id:"312",title: '搜索列表（项目）'},
-                  {id:"313",title: '搜索列表（应用）'},
+                  {id:"311",title: '搜索列表（文章）',route:{name:'listArticle'}},
+                  {id:"312",title: '搜索列表（项目）',route:{name:'listProject'}},
+                  {id:"313",title: '搜索列表（应用）',route:{name:'listApp'}},
                 ]},
-              {id:"32",title: '查询表格'},
-              {id:"33",title: '标准列表'},
-              {id:"34",title: '卡片列表'},
+              {id:"32",title: '查询表格',route:{name:'listQuery'}},
+              {id:"33",title: '标准列表',route:{name:'listNormal'}},
+              {id:"34",title: '卡片列表',route:{name:'listCard'}},
             ]
           },
           {id:"4",title: '详情页', children: [
-              {id:"41",title: '基础详情页'},
-              {id:"42",title: '高级详情页'},
+              {id:"41",title: '基础详情页',route:{name:'detailBase'}},
+              {id:"42",title: '高级详情页',route:{name:'detailAdvanced'}},
             ]
           },
           {id:"5",icon:'el-icon-circle-check',title: '结果页', children: [
-              {id:"51",title: '成功页'},
-              {id:"52",title: '失败页'},
+              {id:"51",title: '成功页',route:{name:'resultSuccess'}},
+              {id:"52",title: '失败页',route:{name:'resultFail'}},
             ]
           },
           {id:"6",icon:'el-icon-warning-outline',title: '异常页', children: [
-              {id:"61",title: '401页'},
-              {id:"62",title: '404页'},
-              {id:"63",title: '500页'},
-              {id:"64",title: '通用错误'},
+              {id:"61",title: '401页',route:{name:'error401'}},
+              {id:"62",title: '404页',route:{name:'error404'}},
+              {id:"63",title: '500页',route:{name:'error500'}},
+              {id:"64",title: '通用错误',route:{name:'errorDefault'}},
             ]
           },
           {id:"7",icon:'el-icon-user',title: '个人页', children: [
-              {id:"71",title: '个人中心'},
-              {id:"72",title: '个人设置'},
+              {id:"71",title: '个人中心',route:{name:'userCenter'}},
+              {id:"72",title: '个人设置',route:{name:'userSetting'}},
             ]
           },
         ],

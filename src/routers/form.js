@@ -15,6 +15,6 @@ export default [
     path: '/form-advanced',
     name:'formAdvanced',
     meta: {title: '高级表单'},
-    component:()=> import('../views/form/FormBase')
+    component:()=> import('../views/form/FormAdvanced')
   }
 ]

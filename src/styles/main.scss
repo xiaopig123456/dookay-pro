@@ -828,6 +828,16 @@ html, body, #app {
   }
 }
 
+.dk-passport-result{
+  text-align: center;
+  .dk-result-icon{
+    margin-bottom: 10px;
+  }
+  .dk-result-description{
+    margin-bottom: 24px;
+  }
+}
+
 /* 页面头 */
 .dk-page-header{
   margin: -20px -20px 20px;
@@ -1137,6 +1147,41 @@ html, body, #app {
       margin-bottom: 0;
     }
   }
+}
+
+/*结果组件*/
+.dk-result{
+  .dk-result-icon{
+    text-align: center;
+    font-size: 72px;
+    margin-bottom: 24px;
+    line-height: 72px;
+  }
+  .dk-result-title{
+    font-size: 24px;
+    line-height: 1.8;
+    text-align: center;
+    margin: 0;
+    color: $--color-text-primary;
+    font-weight: normal;
+  }
+  .dk-result-description{
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.6;
+    color: $--color-text-secondary;
+  }
+}
+.dk-result-success .dk-result-icon{color: $--color-success;}
+.dk-result-warning .dk-result-icon{color: $--color-warning;}
+.dk-result-error .dk-result-icon{color: $--color-danger;}
+.dk-result-info .dk-result-icon{color: $--color-primary;}
+.dk-result-question .dk-result-icon{color: $--color-primary;}
+
+/* 结果页 */
+.dk-page-result{
+  padding: 48px 32px;
+
 }
 
 /* 主题色 */

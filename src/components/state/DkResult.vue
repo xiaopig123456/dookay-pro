@@ -1,5 +1,5 @@
 <template>
-    <div class="dk-result">
+    <div :class="['dk-result','dk-result-'+state]">
         <div class="dk-result-icon"><i :class="'el-icon-'+state"></i></div>
 
         <h3 class="dk-result-title" v-if="title" v-html="title"></h3>
