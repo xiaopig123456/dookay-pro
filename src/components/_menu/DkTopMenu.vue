@@ -26,9 +26,10 @@
                         <i class="el-icon-bell"></i>
                     </el-badge>
                 </el-button>
-                <el-dropdown>
+                <el-dropdown class="dk-header-user">
                     <el-button>
                         <el-avatar :src="require('../../assets/img/avatar.jpg')" :size="24"></el-avatar>
+                        Yanjun
                     </el-button>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item icon="el-icon-user">个人中心</el-dropdown-item>

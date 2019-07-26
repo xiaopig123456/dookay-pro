@@ -37,7 +37,7 @@
                             <el-slider v-model="form.progress"></el-slider>
                         </el-form-item>
                         <el-form-item label="使用人数：" prop="number" key="number">
-                            <el-input-number v-model="form.number" :min="1" :max="10"></el-input-number>
+                            <el-input-number v-model="form.number" controls-position="right" :min="1" :max="10"></el-input-number>
                         </el-form-item>
                         <el-form-item label="是否推荐：" prop="isPush" key="isPush">
                             <el-switch v-model="form.isPush"></el-switch>
@@ -56,6 +56,9 @@
                                 <el-checkbox label="线下主题活动" name="type"></el-checkbox>
                                 <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
                             </el-checkbox-group>
+                        </el-form-item>
+                        <el-form-item label="发布日期：" prop="createdAt" key="createdAt">
+                            <el-date-picker v-model="form.createdAt" type="date" placeholder="选择日期"></el-date-picker>
                         </el-form-item>
                         <el-form-item key="submit">
                             <el-button native-type="submit" type="primary" :loading="formLoading">提交</el-button>
@@ -87,6 +90,7 @@
           isPush:false,
           status:1,
           resource:[],
+          createdAt:'',
         },
         rules: {
           title: [

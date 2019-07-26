@@ -1,7 +1,7 @@
 <template>
-    <router-link :class="['el-button','el-button--'+type,round?'is-round':'',plain?'is-plain':'',circle?'is-circle':'',disabled?'is-disabled':'',size?'el-button--'+size:'']" :to="to" :target="target">
+    <router-link :class="['el-button','el-button--'+type,round?'is-round':'',plain?'is-plain':'',circle?'is-circle':'',disabled?'is-disabled':'',size?'el-button--'+size:'']" :to="to?to:'javascript:void(0);'" :target="target">
         <i v-if="icon" :class="icon"></i>
-        <slot></slot>
+        <span><slot></slot></span>
     </router-link>
 </template>
 

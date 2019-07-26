@@ -2,21 +2,68 @@
     <div>
         <dk-page-header :breadcrumb="breadcrumb" title="查询表格"></dk-page-header>
         <el-card class="dk-box-card-main" shadow="never">
-            <el-form :inline="true" :model="searchForm" size="small" class="dk-search-form">
-                <el-form-item label="审批人：" prop="">
-                    <el-input v-model="searchForm.user" placeholder="审批人"></el-input>
+            <!-- 搜索表单 -->
+            <el-form :inline="true" :model="searchForm" @submit.native="submitSearchForm"  size="small" class="dk-search-form">
+                <el-form-item label="规则名称：" prop="ruleName" key="ruleName">
+                    <el-input v-model="searchForm.ruleName" placeholder="请输入"></el-input>
                 </el-form-item>
-                <el-form-item label="活动区域：">
-                    <el-select v-model="searchForm.region" placeholder="活动区域">
-                        <el-option label="区域一" value="shanghai"></el-option>
-                        <el-option label="区域二" value="beijing"></el-option>
+                <el-form-item label="使用状态：" prop="status" key="status">
+                    <el-select v-model="searchForm.status" placeholder="请选择">
+                        <el-option label="关闭" value="0"></el-option>
+                        <el-option label="运行中" value="1"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item>
-                    <el-button type="primary">查询</el-button>
+                <template v-if="openSearchForm">
+                    <el-form-item label="调用次数：" prop="number" key="number">
+                        <el-input-number v-model="searchForm.number" controls-position="right"></el-input-number>
+                    </el-form-item>
+                    <el-form-item label="更新日期：" prop="date" key="date">
+                        <el-date-picker v-model="searchForm.date" type="date" placeholder="选择日期"></el-date-picker>
+                    </el-form-item>
+                </template>
+                <el-form-item class="dk-search-form-button" key="search-form-button">
+                    <el-button type="primary" native-type="submit">查询</el-button>
+                    <el-button native-type="reset">重置</el-button>
+                    <el-button type="text" @click="openSearchForm = !openSearchForm">{{openSearchForm?'收起':'展开'}}<i :class="[openSearchForm?'el-icon-arrow-up':'el-icon-arrow-down']"></i></el-button>
                 </el-form-item>
             </el-form>
-
+            <!-- 列表操作按钮 -->
+            <div class="dk-query-table-operation">
+                <dk-link-button type="primary" icon="el-icon-plus" size="small">添加数据</dk-link-button>
+                <template v-if="selectionData.length>0">
+                    <el-button size="small">批量操作</el-button>
+                    <el-dropdown>
+                        <el-button size="small">
+                            更多操作<i class="el-icon-arrow-down el-icon--right"></i>
+                        </el-button>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item>删除</el-dropdown-item>
+                            <el-dropdown-item>批量审批</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                </template>
+            </div>
+            <!-- 表格列表 -->
+            <el-table
+                    class="dk-query-table-list"
+                    :data="listData"
+                    @selection-change="handleSelectionData"
+            >
+                <el-table-column fixed type="selection" width="40"></el-table-column>
+                <el-table-column prop="name" label="姓名" width="120"></el-table-column>
+                <el-table-column prop="address" label="地址"></el-table-column>
+                <el-table-column prop="date" label="日期" width="150"></el-table-column>
+                <el-table-column
+                        fixed="right"
+                        label="操作"
+                        width="100">
+                    <template slot-scope="scope">
+                        <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+                        <el-button type="text" size="small">编辑</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <!-- 分页 -->
 
         </el-card>
     </div>
@@ -26,14 +73,48 @@
   export default {
     name: "ListQuery",
     data(){
+
+      let listData = [];
+      for (let i=1;i<=10;i++){
+        listData.push({
+          id:i,
+          date: '2016-05-03',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        })
+      }
+
       return {
         breadcrumb:[{title:'首页',name:'index'},{title:'列表页'},{title:'查询表格'}],
 
         openSearchForm:false,
-
         searchForm:{
+          ruleName:'',
+          status:'',
+          number:null,
+          date:'',
+        },
 
-        }
+        listData:listData,
+        selectionData:[]
+      }
+    },
+    methods:{
+      /**
+       * 搜索表单提交
+       */
+      submitSearchForm(){
+        const self = this;
+      },
+      /**
+       * 选择数据
+       * @param val
+       */
+      handleSelectionData(val){
+        this.selectionData = val;
       }
     },
   }

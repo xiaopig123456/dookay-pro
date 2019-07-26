@@ -65,6 +65,11 @@ html, body, #app {
   }
 }
 
+/* 按钮 */
+.el-button + .el-dropdown{
+  margin-left: 10px;
+}
+
 /* 步骤条 */
 .dk-step-main{
   margin: 16px 0 32px;
@@ -117,12 +122,10 @@ html, body, #app {
 /* 表单 */
 .el-input__prefix {
   left: 10px;
-  line-height: 40px;
 }
 
 .el-input__suffix {
   right: 10px;
-  line-height: 40px;
 }
 
 .dk-form-item-text {
@@ -159,6 +162,22 @@ html, body, #app {
   .el-button{
     width: 50%;
   }
+}
+
+.el-input-number.is-controls-right{
+  .el-input__inner{
+    text-align: left;
+  }
+}
+.el-input-number.is-controls-right,
+.el-date-editor.el-input,
+.el-date-editor.el-input__inner,
+.el-select,
+.el-date-editor--daterange.el-input,
+.el-date-editor--daterange.el-input__inner,
+.el-date-editor--timerange.el-input,
+.el-date-editor--timerange.el-input__inner{
+  width: 100%;
 }
 
 /* 导航 */
@@ -436,11 +455,24 @@ html, body, #app {
 
       > .el-button,
       > .el-dropdown > .el-button {
-        font-size: 18px;
+        font-size: 16px;
       }
 
       > .el-button.dk-header-btn-notifications {
         padding: 0 18px 0 12px;
+      }
+    }
+
+    .dk-header-user{
+      >.el-button{
+        font-size: $--font-size-base!important;
+        vertical-align: top;
+
+        .el-avatar{
+          vertical-align: middle;
+          position: relative;
+          top: -1px;
+        }
       }
     }
 
@@ -467,7 +499,7 @@ html, body, #app {
         }
 
         > i {
-          font-size: 20px;
+          font-size: 18px;
           color: $--color-text-regular;
         }
       }
@@ -1118,13 +1150,7 @@ html, body, #app {
 
 /* 表单 */
 .dk-form{
-  .el-select,
-  .el-date-editor--daterange.el-input,
-  .el-date-editor--daterange.el-input__inner,
-  .el-date-editor--timerange.el-input,
-  .el-date-editor--timerange.el-input__inner{
-    width: 100%;
-  }
+
 }
 
 .dk-form-base{
@@ -1177,6 +1203,37 @@ html, body, #app {
 .dk-result-error .dk-result-icon{color: $--color-danger;}
 .dk-result-info .dk-result-icon{color: $--color-primary;}
 .dk-result-question .dk-result-icon{color: $--color-primary;}
+
+
+.dk-search-form{
+  margin-bottom: 18px;
+  border-bottom: 1px solid $--border-color-lighter;
+
+  .dk-search-form-button{
+    margin-right: 0;
+  }
+}
+
+.dk-screen-sm,.dk-screen-xs{
+  .dk-search-form{
+     .el-form-item{
+       display: block;
+       margin-right: 0;
+       margin-bottom: 10px;
+     }
+    .el-form-item__content{
+      display: block;
+    }
+    .dk-search-form-button{
+      text-align: right;
+    }
+  }
+}
+
+/* 查询表格 */
+.dk-query-table-list{
+
+}
 
 /* 结果页 */
 .dk-page-result{
