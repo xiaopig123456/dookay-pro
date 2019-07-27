@@ -3,7 +3,8 @@
         <dk-page-header :breadcrumb="breadcrumb" title="查询表格"></dk-page-header>
         <el-card class="dk-box-card-main" shadow="never">
             <!-- 搜索表单 -->
-            <el-form :inline="true" :model="searchForm" @submit.native="submitSearchForm"  size="small" class="dk-search-form">
+            <el-form :inline="true" :model="searchForm" @submit.native="submitSearchForm" size="small"
+                     class="dk-search-form">
                 <el-form-item label="规则名称：" prop="ruleName" key="ruleName">
                     <el-input v-model="searchForm.ruleName" placeholder="请输入"></el-input>
                 </el-form-item>
@@ -24,7 +25,8 @@
                 <el-form-item class="dk-search-form-button" key="search-form-button">
                     <el-button type="primary" native-type="submit">查询</el-button>
                     <el-button native-type="reset">重置</el-button>
-                    <el-button type="text" @click="openSearchForm = !openSearchForm">{{openSearchForm?'收起':'展开'}}<i :class="[openSearchForm?'el-icon-arrow-up':'el-icon-arrow-down']"></i></el-button>
+                    <el-button type="text" @click="openSearchForm = !openSearchForm">{{openSearchForm?'收起':'展开'}}<i
+                            :class="[openSearchForm?'el-icon-arrow-up':'el-icon-arrow-down']"></i></el-button>
                 </el-form-item>
             </el-form>
             <!-- 列表操作按钮 -->
@@ -51,20 +53,39 @@
             >
                 <el-table-column fixed type="selection" width="40"></el-table-column>
                 <el-table-column prop="name" label="姓名" width="120"></el-table-column>
-                <el-table-column prop="address" label="地址"></el-table-column>
-                <el-table-column prop="date" label="日期" width="150"></el-table-column>
+                <el-table-column prop="address" label="地址" :show-overflow-tooltip="true"></el-table-column>
+                <el-table-column
+                        prop="status"
+                        label="状态"
+                        :filters="[{ text: '关闭', value: 0}, { text: '已上线', value: 1 }, { text: '运行中', value: 2 }, { text: '正常', value: 3 }]"
+                        width="80">
+                    <template slot-scope="scope">
+                        <dk-status :tpye="'primary'">{{scope.row.status}}</dk-status>
+                    </template>
+                </el-table-column>
+                <el-table-column sortable prop="date" label="日期" width="150"></el-table-column>
                 <el-table-column
                         fixed="right"
                         label="操作"
                         width="100">
                     <template slot-scope="scope">
-                        <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-                        <el-button type="text" size="small">编辑</el-button>
+                        <el-button @click="handleRowClick('view',scope.row)" type="text" size="small">查看</el-button>
+                        <el-button @click="handleRowClick('edit',scope.row)" type="text" size="small">编辑</el-button>
                     </template>
                 </el-table-column>
             </el-table>
             <!-- 分页 -->
-
+            <el-pagination
+                    class="dk-pagination"
+                    background
+                    @size-change="handlePageSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="pagination.currentPage"
+                    :page-sizes="[10,50,100, 200, 300, 400]"
+                    :page-size="pagination.pageSize"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="pagination.total">
+            </el-pagination>
         </el-card>
     </div>
 </template>
@@ -72,50 +93,73 @@
 <script>
   export default {
     name: "ListQuery",
-    data(){
+    data() {
 
       let listData = [];
-      for (let i=1;i<=10;i++){
+      for (let i = 1; i <= 10; i++) {
         listData.push({
-          id:i,
-          date: '2016-05-03',
+          id: i,
           name: '王小虎',
-          province: '上海',
-          city: '普陀区',
+          status: 1,
           address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
+          date: '2016-05-03',
         })
       }
 
       return {
-        breadcrumb:[{title:'首页',name:'index'},{title:'列表页'},{title:'查询表格'}],
+        breadcrumb: [{title: '首页', name: 'index'}, {title: '列表页'}, {title: '查询表格'}],
 
-        openSearchForm:false,
-        searchForm:{
-          ruleName:'',
-          status:'',
-          number:null,
-          date:'',
+        openSearchForm: false,
+        searchForm: {
+          ruleName: '',
+          status: '',
+          number: null,
+          date: '',
         },
 
-        listData:listData,
-        selectionData:[]
+        listData: listData,
+        selectionData: [],
+
+        pagination:{
+          currentPage:1,
+          pageSize:10,
+          total:400,
+        }
       }
     },
-    methods:{
+    methods: {
       /**
        * 搜索表单提交
        */
-      submitSearchForm(){
-        const self = this;
+      submitSearchForm() {
+        this.$message.info(`你进行了搜索。`)
       },
       /**
        * 选择数据
        * @param val
        */
-      handleSelectionData(val){
+      handleSelectionData(val) {
         this.selectionData = val;
-      }
+      },
+
+      /**
+       * 行点击操作
+       * @param action
+       * @param row
+       */
+      handleRowClick(action,row){
+        this.$message.info(`你进行了${action}操作。`)
+      },
+
+      /**
+       * 分页
+       */
+      handlePageSizeChange(val){
+        this.$message.info(`每页 ${val} 条`);
+      },
+      handleCurrentChange(val){
+        this.$message.info(`当前页: ${val}`);
+      },
     },
   }
 </script>

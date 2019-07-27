@@ -1231,8 +1231,19 @@ html, body, #app {
 }
 
 /* 查询表格 */
+.dk-query-table-operation{
+  margin-bottom: 18px;
+}
 .dk-query-table-list{
-
+  .el-table__header{
+    th{
+      background-color: $--background-color-base;
+      > .cell{
+        font-weight: normal;
+        color: $--color-text-primary;
+      }
+    }
+  }
 }
 
 /* 结果页 */
