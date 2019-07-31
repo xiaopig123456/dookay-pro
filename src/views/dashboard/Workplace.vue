@@ -22,7 +22,7 @@
                     <el-button type="text">全部项目</el-button>
                 </div>
             </div>
-            <dk-list class="dk-list-style-project" :list="dataList" media-shape="circle">
+            <dk-list class="dk-list-style-project" :list="listData" media-shape="circle">
                 <template slot="default" slot-scope="scope">
                     <div class="dk-list-description">{{scope.item.desc}}</div>
                     <div class="dk-list-style-project-bottom">
@@ -36,7 +36,7 @@
             <div slot="header" class="clearfix">
                 <h3 class="dk-card-header-title">动态</h3>
             </div>
-            <dk-list class="dk-list-style-dynamic" :list="dataList" media-shape="circle">
+            <dk-list class="dk-list-style-dynamic" :list="listData" media-shape="circle">
                 <template slot="header" slot-scope="scope">
                     小pig 在 <a href="javascript:void(0);">{{scope.item.username}}</a> 新建项目 <a href="javascript:void(0);">{{scope.item.title}}</a>
                 </template>
@@ -54,9 +54,9 @@
     data(){
       const avatar = require('../../assets/img/avatar.jpg');
 
-      let dataList = [];
+      let listData = [];
       for (let i =0;i<6;i++){
-        dataList.push({
+        listData.push({
           image:avatar,
           title:'Dookay Pro',
           desc:'城镇中有那么多的酒馆，她却偏偏走进了我的酒馆',
@@ -69,7 +69,7 @@
         userInfo:[{image:avatar,title:'Xiao Pig，祝您开心每一天！',description:'交互专家 |稻壳互联－某某某事业群－某某平台部－某某技术部'}],
         breadcrumb:[{title:'首页',name:'index'},{title:'仪表盘'},{title:'工作台'}],
         statistics:[{key:'项目数',value:'56'},{key:'团队国内排名',value:'8'},{key:'项目访问',value:'2,223'}],
-        dataList:dataList,
+        listData:listData,
       }
     },
     computed:{

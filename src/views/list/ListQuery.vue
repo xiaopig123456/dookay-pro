@@ -28,6 +28,7 @@
                     <el-button type="text" @click="openSearchForm = !openSearchForm">{{openSearchForm?'收起':'展开'}}<i
                             :class="[openSearchForm?'el-icon-arrow-up':'el-icon-arrow-down']"></i></el-button>
                 </el-form-item>
+                <el-divider></el-divider>
             </el-form>
             <!-- 列表操作按钮 -->
             <div class="dk-query-table-operation">
@@ -57,20 +58,29 @@
                 <el-table-column
                         prop="status"
                         label="状态"
-                        :filters="[{ text: '关闭', value: 0}, { text: '已上线', value: 1 }, { text: '运行中', value: 2 }, { text: '正常', value: 3 }]"
-                        width="80">
+                        :filters="listDataStatus"
+                        width="120">
                     <template slot-scope="scope">
-                        <dk-status :tpye="'primary'">{{scope.row.status}}</dk-status>
+                        <template v-for="(item,index) in listDataStatus">
+                            <dk-status v-if="item.value === scope.row.status" :type="item.type" :text="item.text" :key="index"></dk-status>
+                        </template>
                     </template>
                 </el-table-column>
                 <el-table-column sortable prop="date" label="日期" width="150"></el-table-column>
                 <el-table-column
                         fixed="right"
                         label="操作"
-                        width="100">
+                        width="120">
                     <template slot-scope="scope">
                         <el-button @click="handleRowClick('view',scope.row)" type="text" size="small">查看</el-button>
-                        <el-button @click="handleRowClick('edit',scope.row)" type="text" size="small">编辑</el-button>
+                        <el-divider direction="vertical"></el-divider>
+                        <el-dropdown>
+                            <el-button type="text" size="small">更多<i class="el-icon-arrow-down el-icon--right"></i></el-button>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item>编辑</el-dropdown-item>
+                                <el-dropdown-item>删除</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
                     </template>
                 </el-table-column>
             </el-table>
@@ -119,6 +129,7 @@
 
         listData: listData,
         selectionData: [],
+        listDataStatus:[{ text: '关闭', value: 0,type:'info'}, { text: '已上线', value: 1 ,type:'success'}, { text: '运行中', value: 2 ,type:'primary'}, { text: '异常', value: 3 ,type:'danger'}],
 
         pagination:{
           currentPage:1,
