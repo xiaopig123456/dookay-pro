@@ -3,7 +3,7 @@
         <dk-page-header :breadcrumb="breadcrumb" title="查询表格"></dk-page-header>
         <el-card class="dk-box-card-main" shadow="never">
             <!-- 搜索表单 -->
-            <el-form :inline="true" :model="searchForm" @submit.native="submitSearchForm" size="small"
+            <el-form action="javascript:void(0);" :inline="true" :model="searchForm" @submit.native="submitSearchForm" size="small"
                      class="dk-search-form">
                 <el-form-item label="规则名称：" prop="ruleName" key="ruleName">
                     <el-input v-model="searchForm.ruleName" placeholder="请输入"></el-input>
@@ -52,9 +52,9 @@
                     :data="listData"
                     @selection-change="handleSelectionData"
             >
-                <el-table-column fixed type="selection" width="40"></el-table-column>
+                <el-table-column type="selection" width="40"></el-table-column>
                 <el-table-column prop="name" label="姓名" width="120"></el-table-column>
-                <el-table-column prop="address" label="地址" :show-overflow-tooltip="true"></el-table-column>
+                <el-table-column prop="address" min-width="200" label="地址" :show-overflow-tooltip="true"></el-table-column>
                 <el-table-column
                         prop="status"
                         label="状态"
@@ -70,7 +70,7 @@
                 <el-table-column
                         fixed="right"
                         label="操作"
-                        width="120">
+                        width="110">
                     <template slot-scope="scope">
                         <el-button @click="handleRowClick('view',scope.row)" type="text" size="small">查看</el-button>
                         <el-divider direction="vertical"></el-divider>
@@ -94,6 +94,7 @@
                     :page-sizes="[10,50,100, 200, 300, 400]"
                     :page-size="pagination.pageSize"
                     layout="total, sizes, prev, pager, next, jumper"
+                    :pager-count="5"
                     :total="pagination.total">
             </el-pagination>
         </el-card>
@@ -101,21 +102,21 @@
 </template>
 
 <script>
+  // 测试数据
+  let listData = [];
+  for (let i = 1; i <= 10; i++) {
+    listData.push({
+      id: i,
+      name: '王小虎',
+      status: 1,
+      address: '上海市普陀区金沙江路 1518 弄',
+      date: '2016-05-03',
+    })
+  }
+
   export default {
     name: "ListQuery",
     data() {
-
-      let listData = [];
-      for (let i = 1; i <= 10; i++) {
-        listData.push({
-          id: i,
-          name: '王小虎',
-          status: 1,
-          address: '上海市普陀区金沙江路 1518 弄',
-          date: '2016-05-03',
-        })
-      }
-
       return {
         breadcrumb: [{title: '首页', name: 'index'}, {title: '列表页'}, {title: '查询表格'}],
 

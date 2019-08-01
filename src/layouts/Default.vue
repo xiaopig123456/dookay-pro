@@ -16,10 +16,11 @@
                             unique-opened
                             @select="menuSelect"
                             class="dk-aside-menu"
+                            :default-active="activeMenu"
                     >
                         <template v-for="(item,i) in menuList">
                             <dk-sub-menu popper-class="dk-slide-popper" v-if="item.children && item.children.length>0" :menu="item" :key="i"></dk-sub-menu>
-                            <el-menu-item v-else :index="item.id" :key="i"><i :class="item.icon?item.icon:'el-icon-document'"></i><span slot="title">{{item.title}}</span></el-menu-item>
+                            <el-menu-item v-else :index="item.key" :key="i"><i :class="item.icon?item.icon:'el-icon-document'"></i><span slot="title">{{item.title}}</span></el-menu-item>
                         </template>
                     </el-menu>
                 </div>
@@ -63,48 +64,49 @@
         screenXsAsideIsOpened:false,
 
         // 菜单列表
+        activeMenu:this.$route.name,
         menuList: [
-          {id:"1",icon:'el-icon-odometer',title: '仪表盘', children:[
-              {id:"11",title: '首页',route:{name:'index'}},
-              {id:"12",title: '工作台',route:{name:'dashboardWorkplace'}},
+          {key:"dashboard",icon:'el-icon-odometer',title: '仪表盘', children:[
+              {key:"index",title: '首页',route:{name:'index'}},
+              {key:"dashboardWorkplace",title: '工作台',route:{name:'dashboardWorkplace'}},
             ]},
-          {id:"2",icon:'el-icon-edit-outline',title: '表单页', children: [
-              {id:"21",title: '基础表单',route:{name:'formBase'}},
-              {id:"22",title: '分步表单',route:{name:'formStep'}},
-              {id:"23",title: '高级表单',route:{name:'formAdvanced'}},
+          {key:"form",icon:'el-icon-edit-outline',title: '表单页', children: [
+              {key:"formBase",title: '基础表单',route:{name:'formBase'}},
+              {key:"formStep",title: '分步表单',route:{name:'formStep'}},
+              {key:"formAdvanced",title: '高级表单',route:{name:'formAdvanced'}},
             ]
           },
-          {id:"3",icon:'ion-ios-list',title: '列表页', children: [
-              {id:"31",title: '搜索列表',children:[
-                  {id:"311",title: '搜索列表（文章）',route:{name:'listArticle'}},
-                  {id:"312",title: '搜索列表（项目）',route:{name:'listProject'}},
-                  {id:"313",title: '搜索列表（应用）',route:{name:'listApp'}},
+          {key:"list",icon:'ion-ios-list',title: '列表页', children: [
+              {key:"listSearch",title: '搜索列表',children:[
+                  {key:"listArticle",title: '搜索列表（文章）',route:{name:'listArticle'}},
+                  {key:"listProject",title: '搜索列表（项目）',route:{name:'listProject'}},
+                  {key:"listApp",title: '搜索列表（应用）',route:{name:'listApp'}},
                 ]},
-              {id:"32",title: '查询表格',route:{name:'listQuery'}},
-              {id:"33",title: '标准列表',route:{name:'listNormal'}},
-              {id:"34",title: '卡片列表',route:{name:'listCard'}},
+              {key:"listQuery",title: '查询表格',route:{name:'listQuery'}},
+              {key:"listNormal",title: '标准列表',route:{name:'listNormal'}},
+              {key:"listCard",title: '卡片列表',route:{name:'listCard'}},
             ]
           },
-          {id:"4",title: '详情页', children: [
-              {id:"41",title: '基础详情页',route:{name:'detailBase'}},
-              {id:"42",title: '高级详情页',route:{name:'detailAdvanced'}},
+          {key:"detail",title: '详情页', children: [
+              {key:"detailBase",title: '基础详情页',route:{name:'detailBase'}},
+              {key:"detailAdvanced",title: '高级详情页',route:{name:'detailAdvanced'}},
             ]
           },
-          {id:"5",icon:'el-icon-circle-check',title: '结果页', children: [
-              {id:"51",title: '成功页',route:{name:'resultSuccess'}},
-              {id:"52",title: '失败页',route:{name:'resultFail'}},
+          {key:"result",icon:'el-icon-circle-check',title: '结果页', children: [
+              {key:"resultSuccess",title: '成功页',route:{name:'resultSuccess'}},
+              {key:"resultFail",title: '失败页',route:{name:'resultFail'}},
             ]
           },
-          {id:"6",icon:'el-icon-warning-outline',title: '异常页', children: [
-              {id:"61",title: '401页',route:{name:'error401'}},
-              {id:"62",title: '404页',route:{name:'error404'}},
-              {id:"63",title: '500页',route:{name:'error500'}},
-              {id:"64",title: '通用错误',route:{name:'errorDefault'}},
+          {key:"error",icon:'el-icon-warning-outline',title: '异常页', children: [
+              {key:"error401",title: '401页',route:{name:'error401'}},
+              {key:"error404",title: '404页',route:{name:'error404'}},
+              {key:"error500",title: '500页',route:{name:'error500'}},
+              {key:"errorDefault",title: '通用错误',route:{name:'errorDefault'}},
             ]
           },
-          {id:"7",icon:'el-icon-user',title: '个人页', children: [
-              {id:"71",title: '个人中心',route:{name:'userCenter'}},
-              {id:"72",title: '个人设置',route:{name:'userSetting'}},
+          {key:"user",icon:'el-icon-user',title: '个人页', children: [
+              {key:"userCenter",title: '个人中心',route:{name:'userCenter'}},
+              {key:"userSetting",title: '个人设置',route:{name:'userSetting'}},
             ]
           },
         ],
@@ -116,7 +118,7 @@
       },
       isSmallScreen(){
         return this.screen === 'xs' || this.screen === 'sm'
-      }
+      },
     },
     mounted(){
       const self = this;
@@ -141,7 +143,7 @@
           findMenuItem = function(menuList,pathIndex = 0){
             let res;
             self.$util.forEach(menuList,function (item) {
-                if(path[pathIndex] === item.id){
+                if(path[pathIndex] === item.key){
                   if(item.children && item.children.length>0){
                     res = findMenuItem(item.children,pathIndex+1);
                   }else{
@@ -190,6 +192,9 @@
       screenXsAsideIsOpened(val){
         document.getElementById('app').style.overflow = val?'hidden':'';
       },
+      $route(val){
+        this.activeMenu = val.name
+      }
     }
   }
 </script>

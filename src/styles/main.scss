@@ -184,6 +184,65 @@ html, body, #app {
   width: 100%;
 }
 
+.dk-checkbox-group-relax{
+  .el-checkbox-button{
+    margin-left: 10px;
+    &:first-child{
+      margin-left: 0;
+    }
+
+    .el-checkbox-button__inner{
+      border-left:1px solid $--border-color-base;
+      border-radius: $--border-radius-base;
+      box-shadow: none;
+    }
+  }
+  .is-focus{
+    .el-checkbox-button__inner{
+      border-color:$--border-color-base;
+    }
+  }
+  .is-checked{
+    .el-checkbox-button__inner{
+      border-color: transparent;
+    }
+  }
+}
+.dk-checkbox-group-text{
+  .el-checkbox-button__inner{
+    border-color:transparent!important;
+  }
+}
+
+.dk-radio-group-relax{
+  .el-radio-button{
+    margin-left: 10px;
+    &:first-child{
+      margin-left: 0;
+    }
+
+    .el-radio-button__inner{
+      border-left:1px solid $--border-color-base;
+      border-radius: $--border-radius-base;
+      box-shadow: none;
+    }
+  }
+  .is-focus{
+    .el-radio-button__inner{
+      border-color:$--border-color-base;
+    }
+  }
+  .is-checked{
+    .el-radio-button__inner{
+      border-color: transparent;
+    }
+  }
+}
+.dk-radio-group-text{
+  .el-radio-button__inner{
+    border:none!important;
+  }
+}
 /* 导航 */
 .el-menu {
   user-select: none;
@@ -389,12 +448,21 @@ html, body, #app {
   width: 256px !important;
 }
 
+.dk-screen-sm.dk-aside-fixed .dk-header,
+.dk-screen-xs.dk-aside-fixed .dk-header{
+  left: 0!important;
+}
+.dk-screen-sm.dk-aside-fixed .dk-aside-mobile-closed,
+.dk-screen-xs.dk-aside-fixed .dk-aside-mobile-closed{
+  left: -256px;
+}
+
 /* 顶部导航 */
 .dk-header-wrapper {
   height: 64px!important;
   line-height: 64px;
   padding: 0;
-  z-index: 2;
+  z-index: 9;
 
   .dk-header {
     position: relative;
@@ -955,15 +1023,18 @@ html, body, #app {
       width: 48px;
     }
   }
-
+  .dk-list-body{
+    width: 10000px;
+  }
   .dk-list-heading{
     margin-bottom: 5px;
     line-height: 24px;
+    color: $--color-text-primary;
 
     h4{
       margin: 0;
       padding: 0;
-      font-size: 16px;
+      font-size: $--font-size-base;
       font-weight: normal;
     }
   }
@@ -973,12 +1044,13 @@ html, body, #app {
   }
 
   .dk-list-media-square{
-    border-radius: $--border-radius-base;
+    .el-image{
+      border-radius: $--border-radius-base;
+    }
   }
   .dk-list-media-circle{
     .el-image{
       border-radius: $--border-radius-circle;
-      overflow: hidden;
     }
   }
 
@@ -1216,8 +1288,33 @@ html, body, #app {
     margin-bottom: 18px;
     background-color:$--border-color-lighter;
   }
-}
 
+  .dk-search-form-item{
+    padding-top: 16px;
+    border-top:1px dashed $--border-color-base;
+
+    &:first-child{
+      border-top: none;
+    }
+
+    >.dk-search-form-label,
+    >.dk-search-form-control{
+      display: table-cell;
+      vertical-align: top;
+    }
+    >.dk-search-form-label{
+      font-size: $--font-size-base;
+      padding-right: 10px;
+      line-height: 40px;
+    }
+
+  }
+  .dk-search-form-item-small{
+    >.dk-search-form-label{
+      line-height: 32px;
+    }
+  }
+}
 
 .dk-screen-sm,.dk-screen-xs{
   .dk-search-form{
@@ -1231,6 +1328,15 @@ html, body, #app {
     }
     .dk-search-form-button{
       text-align: right;
+    }
+  }
+  .dk-search-form-item{
+    >.dk-search-form-label,
+    >.dk-search-form-control{
+      display: block;
+    }
+    >.dk-search-form-label{
+      padding-right: 0;
     }
   }
 }
@@ -1296,7 +1402,25 @@ html, body, #app {
     height: 32px;
   }
 }
-
+.dk-screen-sm,
+.dk-screen-xs{
+  .dk-pagination .el-pager .number,
+  .btn-quicknext{
+    display: none;
+  }
+  .dk-pagination .el-pager .number.active{
+    display: inline-block;
+  }
+}
+.dk-screen-xs{
+  .dk-pagination{
+    text-align: center!important;
+  }
+  .el-pagination__total,
+  .el-pagination__sizes{
+    display: none!important;
+  }
+}
 /* 状态 */
 .dk-status{
   box-sizing: border-box;
@@ -1373,11 +1497,59 @@ html, body, #app {
     }
   }
 }
+.dk-normal-list{
+  .dk-list .dk-list-item{
+    padding: 5px 0;
+  }
+  .dk-list .dk-list-description{
+    font-size: 12px;
+  }
+  .dk-normal-list-header{
+    font-size: 12px;
+    color: $--color-text-secondary;
+  }
+}
 
+/* 搜索列表 */
+.dk-page-header .dk-search-list-form-keywords{
+  padding-top: 16px;
+}
+.dk-search-list-form-keywords{
+  display: table;
+  >.el-input{
+    display: table-cell;
+    vertical-align: top;
+    width: 10000px;
+    .el-input__inner{
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-right: none;
+    }
+  }
+  >.el-button{
+    display: table-cell;
+    vertical-align: top;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    overflow: hidden;
+  }
+
+
+}
+.dk-page-header-menu{
+  padding-top: 12px;
+  margin-bottom: -20px;
+
+  .el-tabs__header{
+    margin-bottom: 0!important;
+  }
+  .el-tabs__nav-wrap::after{
+    background-color: $--color-white;
+  }
+}
 /* 结果页 */
 .dk-page-result{
   padding: 48px 32px;
-
 }
 
 /* 主题色 */

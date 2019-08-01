@@ -3,14 +3,14 @@
         <dk-page-header :breadcrumb="breadcrumb" title="工作台">
             <el-row :gutter="20">
                 <el-col :sm="24" :md="12">
-                    <dk-list class="dk-workplace-user" :list="userInfo" media-shape="circle">
+                    <dk-list class="dk-workplace-user" :is-single-data="true" :list="userInfo" media-shape="circle">
                         <template slot="header" slot-scope="scope">
-                            <h4>{{greetings + '，' + scope.item.title}}</h4>
+                            <h4>{{greetings + '，' + scope.row.title}}</h4>
                         </template>
                     </dk-list>
                 </el-col>
                 <el-col :sm="24" :md="12">
-                    <dk-list-key-value class="dk-workplace-statistics" position="right" :list="statistics" ></dk-list-key-value>
+                    <dk-list-key-value class="dk-workplace-statistics" align="right" :list="statistics" ></dk-list-key-value>
                 </el-col>
             </el-row>
         </dk-page-header>
@@ -24,10 +24,10 @@
             </div>
             <dk-list class="dk-list-style-project" :list="listData" media-shape="circle">
                 <template slot="default" slot-scope="scope">
-                    <div class="dk-list-description">{{scope.item.desc}}</div>
+                    <div class="dk-list-description">{{scope.row.desc}}</div>
                     <div class="dk-list-style-project-bottom">
-                        <span class="dk-pull-right">{{scope.item.time}}</span>
-                        <a href="javascript:void(0);">{{scope.item.username}}</a>
+                        <span class="dk-pull-right">{{scope.row.time}}</span>
+                        <a href="javascript:void(0);">{{scope.row.username}}</a>
                     </div>
                 </template>
             </dk-list>
@@ -38,10 +38,10 @@
             </div>
             <dk-list class="dk-list-style-dynamic" :list="listData" media-shape="circle">
                 <template slot="header" slot-scope="scope">
-                    小pig 在 <a href="javascript:void(0);">{{scope.item.username}}</a> 新建项目 <a href="javascript:void(0);">{{scope.item.title}}</a>
+                    小pig 在 <a href="javascript:void(0);">{{scope.row.username}}</a> 新建项目 <a href="javascript:void(0);">{{scope.row.title}}</a>
                 </template>
                 <template slot="body" slot-scope="scope">
-                    <div class="dk-list-description">{{scope.item.time}}</div>
+                    <div class="dk-list-description">{{scope.row.time}}</div>
                 </template>
             </dk-list>
         </el-card>
@@ -52,8 +52,8 @@
   export default {
     name: "Workplace",
     data(){
+      // 测试数据
       const avatar = require('../../assets/img/avatar.jpg');
-
       let listData = [];
       for (let i =0;i<6;i++){
         listData.push({
@@ -66,7 +66,7 @@
       }
 
       return {
-        userInfo:[{image:avatar,title:'Xiao Pig，祝您开心每一天！',description:'交互专家 |稻壳互联－某某某事业群－某某平台部－某某技术部'}],
+        userInfo:{image:avatar,title:'Xiao Pig，祝您开心每一天！',description:'交互专家 |稻壳互联－某某某事业群－某某平台部－某某技术部'},
         breadcrumb:[{title:'首页',name:'index'},{title:'仪表盘'},{title:'工作台'}],
         statistics:[{key:'项目数',value:'56'},{key:'团队国内排名',value:'8'},{key:'项目访问',value:'2,223'}],
         listData:listData,

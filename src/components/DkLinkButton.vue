@@ -8,6 +8,7 @@
 <script>
   export default {
     name: "DkLinkButton",
+    // 配置同element ui的button组件
     props:{
       to:[String,Object],
       target:String,

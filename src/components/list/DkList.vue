@@ -1,24 +1,24 @@
 <template>
     <ul class="dk-list">
-        <li class="dk-list-item" v-for="(item,index) in list" :key="index">
+        <li class="dk-list-item" v-for="(item,index) in (isSingleData?[list]:list)" :key="index">
             <div v-if="typeof item.image !== 'undefined'"
                  :class="['dk-list-media','dk-list-media-'+mediaShape,'dk-list-media-'+mediaPosition]">
-                <slot name="media" :item="item">
+                <slot name="media" :row="item">
                     <el-image :src="item.image" lazy></el-image>
                 </slot>
             </div>
             <div class="dk-list-body">
                 <div class="dk-list-heading" v-if="typeof item.title !== 'undefined'">
-                    <slot name="header" :item="item">
+                    <slot name="header" :row="item">
                         <h4 v-html="item.title"></h4>
                     </slot>
                 </div>
-                <slot name="body" :item="item">
+                <slot name="body" :row="item">
                     <div v-if="typeof item.description !== 'undefined'" class="dk-list-description"
                          v-html="item.description"></div>
                 </slot>
             </div>
-            <slot :item="item"></slot>
+            <slot :row="item"></slot>
         </li>
     </ul>
 </template>
@@ -28,19 +28,26 @@
     name: "DkList",
     props: {
       list: {
-        type: Array,
+        type: [Array,Object],
         default() {
           return [];
         }
       },
+      // 是否单条数据
+      isSingleData:{
+        type:Boolean,
+        default:false
+      },
+      // 图片形状
       mediaShape: {
         type: String,
         default: 'square', // 可选的值 circle|square
       },
+      // 图片位置
       mediaPosition: {
         type: String,
         default: 'left', // 可选的值 left|right
-      }
+      },
     }
   }
 </script>
