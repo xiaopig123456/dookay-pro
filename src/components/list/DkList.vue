@@ -1,20 +1,20 @@
 <template>
     <ul class="dk-list">
-        <li class="dk-list-item" v-for="(item,index) in (isSingleData?[list]:list)" :key="index">
+        <li class="dk-media dk-list-item" v-for="(item,index) in (isSingleData?[list]:list)" :key="index">
             <div v-if="typeof item.image !== 'undefined'"
-                 :class="['dk-list-media','dk-list-media-'+mediaShape,'dk-list-media-'+mediaPosition]">
+                 :class="['dk-media-aside','dk-media-'+mediaShape,'dk-media-'+mediaPosition]">
                 <slot name="media" :row="item">
                     <el-image :src="item.image" lazy></el-image>
                 </slot>
             </div>
-            <div class="dk-list-body">
-                <div class="dk-list-heading" v-if="typeof item.title !== 'undefined'">
+            <div class="dk-media-body">
+                <div class="dk-media-heading" v-if="typeof item.title !== 'undefined'">
                     <slot name="header" :row="item">
                         <h4 v-html="item.title"></h4>
                     </slot>
                 </div>
                 <slot name="body" :row="item">
-                    <div v-if="typeof item.description !== 'undefined'" class="dk-list-description"
+                    <div v-if="typeof item.description !== 'undefined'" class="dk-media-description"
                          v-html="item.description"></div>
                 </slot>
             </div>

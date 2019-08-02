@@ -24,7 +24,7 @@
             </div>
             <dk-list class="dk-list-style-project" :list="listData" media-shape="circle">
                 <template slot="default" slot-scope="scope">
-                    <div class="dk-list-description">{{scope.row.desc}}</div>
+                    <div class="dk-media-description">{{scope.row.desc}}</div>
                     <div class="dk-list-style-project-bottom">
                         <span class="dk-pull-right">{{scope.row.time}}</span>
                         <a href="javascript:void(0);">{{scope.row.username}}</a>
@@ -41,7 +41,7 @@
                     小pig 在 <a href="javascript:void(0);">{{scope.row.username}}</a> 新建项目 <a href="javascript:void(0);">{{scope.row.title}}</a>
                 </template>
                 <template slot="body" slot-scope="scope">
-                    <div class="dk-list-description">{{scope.row.time}}</div>
+                    <div class="dk-media-description">{{scope.row.time}}</div>
                 </template>
             </dk-list>
         </el-card>

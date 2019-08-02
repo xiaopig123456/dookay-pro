@@ -69,9 +69,19 @@ html, body, #app {
 .el-button + .el-dropdown{
   margin-left: 10px;
 }
+.el-button [class*="ion-"] + span{
+  margin-left: 5px;
+}
 
 .el-button.is-ghost{
   border-style: dashed;
+}
+
+/* 标签列表 */
+.dk-tags{
+ .el-tag+.el-tag{
+   margin-left: 8px;
+ }
 }
 
 /* 步骤条 */
@@ -981,6 +991,55 @@ html, body, #app {
     }
   }
 }
+/* 媒体对象 */
+.dk-media{
+  .dk-media-aside,
+  .dk-media-body{
+    display: table-cell;
+    vertical-align: top;
+  }
+  .dk-media-aside{
+    .el-image{
+      display: block;
+      overflow: hidden;
+      width: 48px;
+    }
+  }
+  .dk-media-body{
+    width: 10000px;
+  }
+  .dk-media-left{
+    padding-right: 16px;
+  }
+  .dk-media-right{
+    padding-left: 16px;
+  }
+  .dk-media-heading{
+    margin-bottom: 5px;
+    line-height: 24px;
+    color: $--color-text-primary;
+
+    h4{
+      margin: 0;
+      padding: 0;
+      font-size: $--font-size-base;
+      font-weight: normal;
+    }
+  }
+  .dk-media-description{
+    color: $--color-text-secondary;
+  }
+  .dk-media-square{
+    .el-image{
+      border-radius: $--border-radius-base;
+    }
+  }
+  .dk-media-circle{
+    .el-image{
+      border-radius: $--border-radius-circle;
+    }
+  }
+}
 
 /* 列表组件样式 */
 .dk-list,
@@ -994,66 +1053,14 @@ html, body, #app {
     outline: none;
     padding-top: 16px;
     padding-bottom: 16px;
-    border-top: 1px solid $--border-color-lighter;
     font-size: 14px;
     line-height: 20px;
+    border-top: 1px solid $--border-color-lighter;
 
     &:first-child {
       border-top: none;
     }
   }
-
-  .dk-list-media,
-  .dk-list-body {
-    display: table-cell;
-    vertical-align: top;
-  }
-
-  .dk-list-media-left{
-    padding-right: 16px;
-  }
-  .dk-list-media-right{
-    padding-left: 16px;
-  }
-
-  .dk-list-media {
-    .el-image{
-      display: block;
-      overflow: hidden;
-      width: 48px;
-    }
-  }
-  .dk-list-body{
-    width: 10000px;
-  }
-  .dk-list-heading{
-    margin-bottom: 5px;
-    line-height: 24px;
-    color: $--color-text-primary;
-
-    h4{
-      margin: 0;
-      padding: 0;
-      font-size: $--font-size-base;
-      font-weight: normal;
-    }
-  }
-
-  .dk-list-description{
-    color: $--color-text-secondary;
-  }
-
-  .dk-list-media-square{
-    .el-image{
-      border-radius: $--border-radius-base;
-    }
-  }
-  .dk-list-media-circle{
-    .el-image{
-      border-radius: $--border-radius-circle;
-    }
-  }
-
 }
 .dk-list-key-value{
   .dk-list-item{
@@ -1094,16 +1101,16 @@ html, body, #app {
 /* 工作台页面 */
 .dk-workplace-user{
 
-  .dk-list-item{
+  .dk-media{
     padding-top: 12px;
     padding-bottom: 0;
   }
 
-  .dk-list-media .el-image{
+  .dk-media-aside .el-image{
     width: 74px;
   }
 
-  .dk-list-heading{
+  .dk-media-heading{
     line-height: 28px;
     padding-top: 5px;
     h4{
@@ -1112,7 +1119,7 @@ html, body, #app {
     }
   }
 
-  .dk-list-description{
+  .dk-media-description{
     color:$--color-text-secondary;
     line-height: 22px;
   }
@@ -1163,10 +1170,10 @@ html, body, #app {
     }
   }
 
-  .dk-list-media .el-image{
+  .dk-media-aside .el-image{
     width: 24px;
   }
-  .dk-list-heading{
+  .dk-media-heading{
     margin-bottom: 0;
     h4{
       font-size: $--font-size-base;
@@ -1178,7 +1185,7 @@ html, body, #app {
     padding: 20px;
     border-left: 1px solid $--border-color-lighter;
   }
-  .dk-list-description{
+  .dk-media-description{
     margin-top: 8px;
     height: 44px;
     overflow: hidden;
@@ -1206,7 +1213,7 @@ html, body, #app {
     border-left: none;
     border-right: 0;
 
-    .dk-list-description{
+    .dk-media-description{
       height: auto;
       overflow: visible;
     }
@@ -1218,10 +1225,6 @@ html, body, #app {
 }
 
 /* 表单 */
-.dk-form{
-
-}
-
 .dk-form-base{
   margin-top: 10px;
 }
@@ -1373,7 +1376,7 @@ html, body, #app {
   .btn-next,
   .el-pager li{
     border:1px solid $--border-color-light;
-    background-color: transparent;
+    background-color: $--color-white;
     font-weight: normal;
     min-width: 32px;
     height: 32px;
@@ -1385,9 +1388,9 @@ html, body, #app {
   .el-pager li:not(.disabled).active,
   .btn-prev:hover,
   .btn-next:hover{
-    color: #1890FF;
+    color: $--color-primary;
     border-color: $--color-primary;
-    background-color: transparent;
+    background-color: $--color-white;
   }
 
   span:not([class*=suffix]),
@@ -1501,7 +1504,7 @@ html, body, #app {
   .dk-list .dk-list-item{
     padding: 5px 0;
   }
-  .dk-list .dk-list-description{
+  .dk-list .dk-media-description{
     font-size: 12px;
   }
   .dk-normal-list-header{
@@ -1547,6 +1550,80 @@ html, body, #app {
     background-color: $--color-white;
   }
 }
+
+.dk-box-card-main>.el-card__body>.dk-list-search-article:first-child  >.dk-list-item:first-child{
+ padding-top: 0;
+}
+
+.dk-list-search-article{
+  .dk-list-item{
+    border-top: none;
+    border-bottom: 1px solid $--border-color-lighter;
+  }
+
+  .dk-tags{
+    margin-bottom: 16px;
+  }
+  .dk-media-heading h4{
+    font-size: 16px;
+    margin-bottom: 12px;
+    a{
+      color: $--color-text-primary;
+      &:hover{
+        color: $--color-primary;
+      }
+    }
+  }
+  .dk-list-item>.dk-media-body{
+    >.dk-media-description{
+      line-height: 22px;
+    }
+    .dk-media{
+      margin-top: 16px;
+      .dk-media-aside{
+        padding-right: 8px;
+      }
+      .el-avatar{
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+      }
+      .dk-media-body{
+        color: $--color-text-secondary;
+        font-size: 12px;
+
+        .dk-date{margin-left: 15px;}
+      }
+    }
+  }
+  .dk-list-footer-action{
+    margin-top: 10px;
+  }
+}
+
+.dk-list-footer-action{
+  font-size: 12px;
+  line-height: 22px;
+  >.el-button{
+    padding: 0;
+    color: $--color-text-secondary;
+    vertical-align: middle;
+    &:hover{
+      color: $--color-primary;
+    }
+  }
+  >span{vertical-align: middle;}
+  >span i{
+    margin-right: 5px;
+  }
+  color: $--color-text-secondary;
+
+  >.is-active{
+    color: $--color-primary;
+    border-color: transparent;
+  }
+}
+
 /* 结果页 */
 .dk-page-result{
   padding: 48px 32px;

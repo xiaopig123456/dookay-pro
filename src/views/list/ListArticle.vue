@@ -70,25 +70,30 @@
         <el-card class="dk-box-card-main" shadow="never">
             <!-- 列表 -->
             <dk-list class="dk-list-search-article" :list="listData">
+                <template slot="header" slot-scope="scope">
+                    <h4><a href="javascript:void(0);">{{scope.row.title}}</a></h4>
+                </template>
                 <template slot="body" slot-scope="scope">
                     <div class="dk-tags">
-                        <el-tag v-for="(item,index) in scope.row.tags" :key="index" size="small" type="info">{{item}}</el-tag>
+                        <el-tag v-for="(item,index) in scope.row.tags" :key="index" size="mini" type="info">{{item}}</el-tag>
                     </div>
-                    <div class="dk-list-description">{{scope.row.description}}</div>
+                    <div class="dk-media-description">{{scope.row.description}}</div>
                     <div class="dk-media">
-                        <div class="dk-media-left">
+                        <div class="dk-media-aside">
                             <el-avatar :src="scope.row.user.image"></el-avatar>
                         </div>
-                        <div class="media-body">
+                        <div class="dk-media-body">
                             <a href="javascript:void(0);">{{scope.row.user.username}}</a> 发布在 <a href="javascript:void(0);">{{scope.row.publicUrl}}</a>
-                            <span>{{scope.row.date}}</span>
+                            <span class="dk-date">{{scope.row.date}}</span>
                         </div>
                     </div>
-                    <el-button :class="[isCollection?'is-active':'']" type="text" icon="el-icon-star-on">{{scope.row.countCollection}}</el-button>
-                    <el-divider direction="vertical"></el-divider>
-                    <el-button :class="[isZan?'is-active':'']" type="text" icon="ion-md-thumbs-up">{{scope.row.countZan}}</el-button>
-                    <el-divider direction="vertical"></el-divider>
-                    <el-button :class="[isComment?'is-active':'']" type="text" icon="el-icon-s-comment">{{scope.row.countComment}}</el-button>
+                    <div class="dk-list-footer-action">
+                        <el-button :class="[scope.row.isCollection?'is-active':'']" type="text" icon="el-icon-star-on">{{scope.row.countCollection}}</el-button>
+                        <el-divider direction="vertical"></el-divider>
+                        <el-button :class="[scope.row.isZan?'is-active':'']" type="text" icon="ion-md-thumbs-up">{{scope.row.countZan}}</el-button>
+                        <el-divider direction="vertical"></el-divider>
+                        <span :class="[scope.row.isComment?'is-active':'']"><i class="el-icon-s-comment"></i>{{scope.row.countComment}}</span>
+                    </div>
                 </template>
             </dk-list>
             <!-- 分页 -->
@@ -123,7 +128,7 @@
             username:'朱俊俊',
             image:avatar,
           },
-          publicUrl:'http://www.dookay.com/',
+          publicUrl:'http://www.dookay.com',
           date:'2019-08-01 16:31',
           isCollection:i===0,
           isZan:i===3,
