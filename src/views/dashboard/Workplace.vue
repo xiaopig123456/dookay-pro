@@ -53,11 +53,10 @@
     name: "Workplace",
     data(){
       // 测试数据
-      const avatar = require('../../assets/img/avatar.jpg');
       let listData = [];
       for (let i =0;i<6;i++){
         listData.push({
-          image:avatar,
+          image:'/img/avatar.jpg',
           title:'Dookay Pro',
           desc:'城镇中有那么多的酒馆，她却偏偏走进了我的酒馆',
           username:'高逼格公司',
@@ -66,7 +65,7 @@
       }
 
       return {
-        userInfo:{image:avatar,title:'Xiao Pig，祝您开心每一天！',description:'交互专家 |稻壳互联－某某某事业群－某某平台部－某某技术部'},
+        userInfo:{image:'/img/avatar.jpg',title:'Xiao Pig，祝您开心每一天！',description:'交互专家 |稻壳互联－某某某事业群－某某平台部－某某技术部'},
         breadcrumb:[{title:'首页',name:'index'},{title:'仪表盘'},{title:'工作台'}],
         statistics:[{key:'项目数',value:'56'},{key:'团队国内排名',value:'8'},{key:'项目访问',value:'2,223'}],
         listData:listData,

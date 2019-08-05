@@ -54,16 +54,22 @@
                 </div>
             </el-form>
         </el-card>
+
         <!-- 列表 -->
-        <el-row class="dk-list-card">
-            <el-col :span="8" v-for="(o, index) in 2" :key="o" :offset="index > 0 ? 2 : 0">
-                <el-card class="dk-list-item" shadow="hover">
-                    <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
-                    <div style="padding: 14px;">
-                        <span>好吃的汉堡</span>
-                        <div class="bottom clearfix">
-                            <time class="time">{{ currentDate }}</time>
-                            <el-button type="text" class="button">操作按钮</el-button>
+        <el-row class="dk-list-card" :gutter="20">
+            <el-col :sm="12" :md="8" :lg="6" v-for="(item, index) in listData" :key="index">
+                <el-card class="dk-card" shadow="hover">
+                    <a href="javascript:void (0);" class="dk-card-img-top"><el-image :lazy="true" :src="item.image" fit="cover"></el-image></a>
+                    <div class="dk-card-body">
+                        <div class="dk-card-title"><a href="javascript:void (0);">{{item.title}}</a></div>
+                        <div class="dk-card-text">{{item.description}}</div>
+                        <div class="dk-card-bottom">
+                            <span class="time">{{item.time}}</span>
+                            <div class="dk-card-avatars">
+                                <el-tooltip v-for="(v,i) in item.avatars" :key="i" effect="dark" content="朱俊俊" placement="top">
+                                    <el-avatar :src="v" :size="22"></el-avatar>
+                                </el-tooltip>
+                            </div>
                         </div>
                     </div>
                 </el-card>
@@ -77,7 +83,7 @@
                 @size-change="handlePageSizeChange"
                 @current-change="handleCurrentChange"
                 :current-page="pagination.currentPage"
-                :page-sizes="[10,50,100, 200, 300, 400]"
+                :page-sizes="[12,50,100, 200, 300, 400]"
                 :page-size="pagination.pageSize"
                 layout="total, sizes, prev, pager, next, jumper"
                 :pager-count="5"
@@ -91,25 +97,14 @@
     name: "ListProject",
     data(){
       // 测试数据
-      const avatar = require('../../assets/img/avatar.jpg');
       let listData = [];
-      for (let i =0;i<6;i++){
+      for (let i =0;i<12;i++){
         listData.push({
           title:'Dookay Pro',
-          description:'段落示意：蚂蚁金服设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。蚂蚁金服设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。',
-          user:{
-            username:'朱俊俊',
-            image:avatar,
-          },
-          publicUrl:'http://www.dookay.com',
-          date:'2019-08-01 16:31',
-          isCollection:i===0,
-          isZan:i===3,
-          isComment:i===5,
-          countCollection:182,
-          countZan:140,
-          countComment:19,
-          tags:['设计语言','稻壳互联','行为预判']
+          description:'希望是一个好东西，也许是最好的，好东西是不会消亡的。',
+          time:'2小时前',
+          image:'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png',
+          avatars:['/img/avatar.jpg','/img/avatar.jpg','/img/avatar.jpg']
         })
       }
 

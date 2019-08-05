@@ -91,13 +91,12 @@
     data(){
 
       // 测试数据
-      const avatar = require('../../assets/img/avatar.jpg');
       let listData = [];
       for (let i = 1; i <= 5; i++) {
         listData.push({
           id: i,
           title: 'Dookay Pro',
-          image:avatar,
+          image:'/img/avatar.jpg',
           description:'那是一种内在的东西， 他们到达不了，也无法触及的',
           owner: '王小虎',
           progress: 57,

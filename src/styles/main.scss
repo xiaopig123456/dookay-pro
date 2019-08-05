@@ -959,6 +959,8 @@ html, body, #app {
   padding: 20px;
 
   .dk-page-header-title{
+    position: relative;
+    z-index: 2;
     padding-top: 16px;
     >.el-divider{
       margin: 0 20px;
@@ -972,6 +974,8 @@ html, body, #app {
       display: inline-block;
     }
     .dk-page-header-back{
+      position: relative;
+      z-index: 2;
       padding-top: 0;
       padding-bottom: 0;
       height: auto;
@@ -982,6 +986,8 @@ html, body, #app {
       }
     }
     .dk-page-header-title-desc{
+      position: relative;
+      z-index: 2;
       font-size: 14px;
       margin: 12px 0;
       color: $--color-text-secondary;
@@ -989,6 +995,30 @@ html, body, #app {
 
       p{margin: 0;}
     }
+  }
+}
+.dk-page-header-content-link{
+  position: relative;
+  z-index: 1;
+  >.el-button{
+    padding: 0;
+    [class^="el-icon-"],
+    [class^="ion-"]{
+      display: inline-block;
+      margin-right: 8px;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+      border:1px solid $--color-primary;
+      border-radius: 50%;
+      vertical-align: middle;
+    }
+  }
+  .dk-bg{
+    position: absolute;
+    right: 0;
+    top: -74px;
+    height: 100px;
   }
 }
 /* 媒体对象 */
@@ -1018,6 +1048,13 @@ html, body, #app {
     margin-bottom: 5px;
     line-height: 24px;
     color: $--color-text-primary;
+
+    a{
+      color: $--color-text-primary;
+      &:hover{
+        color: $--color-primary;
+      }
+    }
 
     h4{
       margin: 0;
@@ -1220,6 +1257,14 @@ html, body, #app {
 
     &:hover{
       box-shadow: none;
+    }
+  }
+}
+
+.dk-list-style-dynamic{
+  .dk-media-heading{
+    a{
+      color: $--color-primary-light-2;
     }
   }
 }
@@ -1621,6 +1666,126 @@ html, body, #app {
   >.is-active{
     color: $--color-primary;
     border-color: transparent;
+  }
+}
+
+/* 卡片 */
+.el-card.is-hover-shadow:hover,
+.el-card.is-hover-shadow:focus{
+  border-color: rgba(0,0,0,.09);
+  box-shadow: 0 2px 8px rgba(0,0,0,.09);
+}
+.dk-card{
+  margin-bottom: 20px;
+  >.el-card__body{
+    padding: 0;
+
+    >.dk-card-body{
+      padding:16px 20px;
+    }
+
+    >.dk-card-img-top{
+      width: 100%;
+      display: block;
+      >.el-image{
+        width: 100%;
+      }
+    }
+  }
+
+  .dk-card-title{
+    margin-bottom: 4px;
+    overflow: hidden;
+    color: $--color-text-primary;
+    font-weight: 500;
+    font-size: 16px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    line-height: 24px;
+    a{
+      color: $--color-text-primary;
+      &:hover{
+        color: $--color-primary;
+      }
+    }
+  }
+  .dk-card-text{
+    color: $--color-text-secondary;
+    font-size: $--font-size-base;
+    line-height: 22px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .dk-card-bottom{
+    margin-top: 16px;
+    font-size: 12px;
+    color:$--color-text-secondary;
+    line-height: 22px;
+  }
+  .dk-card-avatars{
+    float: right;
+    >.el-avatar{
+      float: right;
+      margin-left: -6px;
+      border: 1px solid #fff;
+      cursor: pointer;
+    }
+  }
+}
+
+.dk-list-card,
+.dk-list-app{
+  margin-bottom: -20px;
+}
+
+.dk-list-app{
+  .dk-list .dk-list-item{
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+  .dk-media-description{
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .dk-card-footer{
+    background-color: #fafafa;
+    border-top: 1px solid $--border-color-lighter;
+    >.el-button,
+    >.el-dropdown{
+      width: 25%;
+      margin-left: 0;
+   }
+    .el-button{
+      color: $--color-text-regular;
+    }
+    >.el-dropdown>.el-button{
+      width: 100%;
+    }
+    .el-divider--vertical{
+      margin: 0 0 0 -1px;
+    }
+  }
+  .dk-card-footer[btn-number="1"]{
+    >.el-button, >.el-dropdown{
+      width: 100%;
+    }
+  }
+  .dk-card-footer[btn-number="2"]{
+    >.el-button, >.el-dropdown{
+      width: 50%;
+    }
+  }
+  .dk-card-footer[btn-number="3"]{
+    >.el-button, >.el-dropdown{
+      width: 33.33%;
+    }
   }
 }
 

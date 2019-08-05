@@ -28,7 +28,7 @@
                 </el-button>
                 <el-dropdown class="dk-header-user">
                     <el-button>
-                        <el-avatar :src="require('../../assets/img/avatar.jpg')" :size="24"></el-avatar>
+                        <el-avatar src="/img/avatar.jpg" :size="24"></el-avatar>
                         Yanjun
                     </el-button>
                     <el-dropdown-menu slot="dropdown">

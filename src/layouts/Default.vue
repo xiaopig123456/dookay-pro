@@ -5,7 +5,7 @@
             <div :class="['dk-aside',isSmallScreen?(screenXsAsideIsOpened?'':'dk-aside-mobile-closed'):'']">
                 <div class="dk-aside-brand">
                     <a href="javascript:void(0);">
-                        <img src="../assets/img/logo.png">
+                        <img src="/img/logo.png">
                     </a>
                     <h1>{{title}}</h1>
                 </div>

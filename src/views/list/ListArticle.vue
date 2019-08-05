@@ -118,7 +118,6 @@
     name: "ListArticle",
     data(){
       // 测试数据
-      const avatar = require('../../assets/img/avatar.jpg');
       let listData = [];
       for (let i =0;i<6;i++){
         listData.push({
@@ -126,7 +125,7 @@
           description:'段落示意：蚂蚁金服设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。蚂蚁金服设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。',
           user:{
             username:'朱俊俊',
-            image:avatar,
+            image:'/img/avatar.jpg',
           },
           publicUrl:'http://www.dookay.com',
           date:'2019-08-01 16:31',

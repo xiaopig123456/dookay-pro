@@ -54,25 +54,61 @@
                 </div>
             </el-form>
         </el-card>
-        <el-card class="dk-box-card-main" shadow="never">
-            <!-- 列表 -->
+        <!-- 列表 -->
+        <el-row class="dk-list-app" :gutter="20">
+            <el-col :sm="12" :md="8" :lg="6" v-for="(item, index) in listData" :key="index">
+                <el-card class="dk-card" shadow="hover">
+                    <div class="dk-card-body">
+                        <dk-list :is-single-data="true" :list="item">
+                            <template slot="media" slot-scope="scope">
+                                <a href="javascript:void (0);"><el-avatar :src="scope.row.image" :size="24"></el-avatar></a>
+                            </template>
+                            <template slot="header" slot-scope="scope">
+                                <div class="dk-media-heading">
+                                    <h4><a href="javascript:void (0);">{{scope.row.title}}</a></h4>
+                                </div>
+                            </template>
+                        </dk-list>
+                    </div>
+                    <div class="dk-card-footer">
+                        <el-tooltip effect="dark" content="下载" placement="top">
+                            <el-button type="text" icon="el-icon-download"></el-button>
+                        </el-tooltip>
+                        <el-divider direction="vertical"></el-divider>
+                        <el-tooltip effect="dark" content="编辑" placement="top">
+                            <el-button type="text" icon="el-icon-edit"></el-button>
+                        </el-tooltip>
+                        <el-divider direction="vertical"></el-divider>
+                        <el-tooltip effect="dark" content="分享" placement="top">
+                            <el-button type="text" icon="el-icon-share"></el-button>
+                        </el-tooltip>
+                        <el-divider direction="vertical"></el-divider>
+                        <el-dropdown>
+                            <el-button type="text" icon="el-icon-more"></el-button>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item>黄金糕</el-dropdown-item>
+                                <el-dropdown-item>狮子头</el-dropdown-item>
+                                <el-dropdown-item>螺蛳粉</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </div>
+                </el-card>
+            </el-col>
+        </el-row>
 
-
-
-            <!-- 分页 -->
-            <el-pagination
-                    class="dk-pagination"
-                    background
-                    @size-change="handlePageSizeChange"
-                    @current-change="handleCurrentChange"
-                    :current-page="pagination.currentPage"
-                    :page-sizes="[10,50,100, 200, 300, 400]"
-                    :page-size="pagination.pageSize"
-                    layout="total, sizes, prev, pager, next, jumper"
-                    :pager-count="5"
-                    :total="pagination.total">
-            </el-pagination>
-        </el-card>
+        <!-- 分页 -->
+        <el-pagination
+                class="dk-pagination"
+                background
+                @size-change="handlePageSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page="pagination.currentPage"
+                :page-sizes="[12,50,100, 200, 300, 400]"
+                :page-size="pagination.pageSize"
+                layout="total, sizes, prev, pager, next, jumper"
+                :pager-count="5"
+                :total="pagination.total">
+        </el-pagination>
     </div>
 </template>
 
@@ -81,25 +117,12 @@
     name: "ListApp",
     data(){
       // 测试数据
-      const avatar = require('../../assets/img/avatar.jpg');
       let listData = [];
-      for (let i =0;i<6;i++){
+      for (let i =0;i<12;i++){
         listData.push({
           title:'Dookay Pro',
-          description:'段落示意：蚂蚁金服设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。蚂蚁金服设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。',
-          user:{
-            username:'朱俊俊',
-            image:avatar,
-          },
-          publicUrl:'http://www.dookay.com',
-          date:'2019-08-01 16:31',
-          isCollection:i===0,
-          isZan:i===3,
-          isComment:i===5,
-          countCollection:182,
-          countZan:140,
-          countComment:19,
-          tags:['设计语言','稻壳互联','行为预判']
+          description:'活跃用户19万，新增用户1884人',
+          image:'/img/avatar.jpg',
         })
       }
 
