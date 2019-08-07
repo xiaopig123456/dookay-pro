@@ -1321,7 +1321,28 @@ html, body, #app {
 .dk-result-info .dk-result-icon{color: $--color-primary;}
 .dk-result-question .dk-result-icon{color: $--color-primary;}
 
+.dk-page-result-content{
+  margin-top: 24px;
+  padding: 24px 40px;
+  background-color: #f8f8f8;
+  border-radius: $--border-radius-base;
+  font-size: $--font-size-base;
+  color: $--color-text-secondary;
+  line-height: 22px;
 
+  .dk-page-result-content-title{
+    font-weight: 500;
+    font-size: 16px;
+    margin-bottom: 16px;
+    color: $--color-text-primary;
+  }
+
+  p+p{
+    margin-top:16px;
+  }
+}
+
+/* 搜索表单 */
 .dk-search-form{
   .dk-search-form-button{
     margin-right: 0;
