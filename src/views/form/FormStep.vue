@@ -82,7 +82,6 @@
       submitForm(){
         const self = this;
         self.$refs.form.validate((valid) => {
-          console.log(1)
           if (!valid) return false;
 
           self.formLoading = true;
